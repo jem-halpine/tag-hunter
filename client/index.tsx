@@ -15,11 +15,11 @@ document.addEventListener('DOMContentLoaded', () => {
      * TODO: replace domain, clientId, and audience
      */
     <Auth0Provider
-      domain=""
-      clientId=""
+      domain="kotare-2024-jem.au.auth0.com"
+      clientId="4erW3XuFmNel4WLTFlL7zKKpw6Vv3CBO"
       authorizationParams={{
         redirect_uri: window.location.origin,
-        audience: '',
+        audience: 'https://taghunter/api',
       }}
     >
       <QueryClientProvider client={queryClient}>
