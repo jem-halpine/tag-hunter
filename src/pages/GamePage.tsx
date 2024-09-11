@@ -44,7 +44,7 @@ export default function GamePage() {
           </div>
 
           <div className='flex flex-col items-center'>
-            <div className="size-[40vw] border-2 border-thGray shadow-md">
+            <div className="size-[40vw] max-h-[60vh] border-2 border-thGray shadow-md">
               <GoogleMap
                 center={{ lat: -41.29244, lng: 174.77876 }}
                 zoom={13}
