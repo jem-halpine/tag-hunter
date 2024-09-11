@@ -19,7 +19,7 @@ document.addEventListener('DOMContentLoaded', () => {
       clientId="4erW3XuFmNel4WLTFlL7zKKpw6Vv3CBO"
       authorizationParams={{
         redirect_uri: window.location.origin,
-        // audience: 'https://taghunter/api',
+        // TODO:audience: 'https://taghunter/api',
       }}
     >
       <QueryClientProvider client={queryClient}>
