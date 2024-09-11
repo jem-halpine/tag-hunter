@@ -10,7 +10,7 @@ const router = express.Router()
 router.get('/', async (req, res) => {
   try {
     const artworks = await db.getAllArtwork()
-    res.json(artworks as Artwork[]).sendStatus(200)
+    res.json(artworks as Artwork[])
   } catch (error) {
     console.error(error)
     res.sendStatus(500)
