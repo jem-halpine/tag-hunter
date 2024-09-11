@@ -9,15 +9,17 @@ import {
 import { useState } from 'react'
 import { LatLng } from 'models/models'
 import * as game from '../game'
+import SprayCan from '@/icons/SprayCan'
 
 export default function GamePage() {
   // TODO: randomly pick artwork on page load
-  const artworkID = 3
+  const artworkID = 1
   const showMarker = true
   const wellington = { lat: -41.29244, lng: 174.77876 }
- 
+
+  const [guessCount, setGuessCount] = useState(3)
   const [userLocation, setUserLocation] = useState<LatLng | null>(wellington)
-  const [gameState, setGameState] = useState('Three guesses remaining')
+  const [gameMessage, setGameMessage] = useState<string>('')
 
   const {
     data: artwork,
@@ -77,17 +79,31 @@ export default function GamePage() {
                 </Map>
               </APIProvider>
             </div>
-            <div className='p-4 w-full flex justify-evenly'>
+            <div className="flex w-full justify-evenly p-4">
               <div>{`Latitude: ${userLocation?.lat.toFixed(6)}`}</div>
               <div>{`Longitude: ${userLocation?.lng.toFixed(6)}`}</div>
             </div>
-            <button
-              onClick={handleSubmitGuess}
-              className="m-10 rounded-md bg-gradient-to-br from-thGold to-thUmber p-4 font-bold text-white shadow-md ring-thGray/50 hover:ring-2"
-            >
-              Submit Guess
-            </button>
-            <div>{gameState}</div>
+            
+            {guessCount > 0 && (
+              <>
+                {/* <div className={guessCount>0 ? "" : "invisible"}>{`Guesses Remaining: ${guessCount}`}</div> */}
+                <div className='flex gap-5'>
+                  <div> Mistakes Remaining:</div>
+                  <div className={guessCount > 0 ? "" : "invisible"}><SprayCan/></div>
+                  <div className={guessCount > 1 ? "" : "invisible"}><SprayCan/></div>
+                  <div className={guessCount > 2 ? "" : "invisible"}><SprayCan/></div>
+                </div>
+                               
+                
+                <button
+                  onClick={handleSubmitGuess}
+                  className="m-10 rounded-md bg-gradient-to-br from-thGold to-thUmber p-4 font-bold text-white shadow-md ring-thGray/50 hover:ring-2"
+                >
+                  Submit Guess
+                </button>
+              </>
+            )}
+            {gameMessage && <div>{gameMessage}</div>}
           </div>
         </div>
       </div>
@@ -102,13 +118,16 @@ export default function GamePage() {
   }
 
   function handleSubmitGuess() {
+    // Calculate distance to artwork
     if (userLocation && artwork) {
       const dist = game.calculateDistance(
         { lat: artwork.latitude, lng: artwork.longitude },
         userLocation,
       )
-      setGameState(`You are ${Math.round(dist)}m away`)
-      console.log(dist)
+
+      
+      setGameMessage(game.failureMessage(dist))
+      setGuessCount(guessCount - 1)
     }
   }
 }
