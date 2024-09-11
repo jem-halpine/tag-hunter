@@ -38,7 +38,6 @@
     "jwks-rsa": "^2.1.5",
     "knex": "^2.5.1",
     "lucide-react": "^0.439.0",
-    "superagent": "^8.1.2",
     "tailwind-merge": "^2.5.2",
     "tailwindcss-animate": "^1.0.7",
     "sqlite3": "^5.1.7",
