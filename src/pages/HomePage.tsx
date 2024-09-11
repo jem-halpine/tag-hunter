@@ -3,5 +3,3 @@ export default function Home() {
     <div>Home</div>
   )
 }
-
-"taghunter.com/play/"
