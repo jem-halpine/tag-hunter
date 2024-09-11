@@ -4,13 +4,11 @@
 export async function up(knex) {
   return knex.schema.createTable('artworks', (table) => {
     table.increments('id')
-    table.varchar('description')
+    table.string('location')
     table.decimal('latitude')
     table.decimal('longitude')
-
-    table.string('artist')
     table.string('image_url')
-
+    table.string('artist')
   })
 }
 

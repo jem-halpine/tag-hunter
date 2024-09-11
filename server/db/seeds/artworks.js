@@ -10,7 +10,7 @@ export async function seed(knex) {
       latitude: -41.31092143587734,
       longitude: 174.77957489029637,
       artist: 'Unknown',
-      image_url: 'example.webp',
+      image_url: 'te-ao-maori-zoo.webp',
     },
     {
       id: 2,
@@ -18,7 +18,7 @@ export async function seed(knex) {
       latitude: -41.31288103446937,
       longitude: 174.7798757155056,
       artist: 'Xoe Hall',
-      image_url: 'example.webp',
+      image_url: 'mexican-festa.webp',
     },
     {
       id: 3,
@@ -26,7 +26,7 @@ export async function seed(knex) {
       latitude: -41.288806234113416,
       longitude: 174.77629558881318,
       artist: 'Unknown',
-      image_url: 'example.webp',
+      image_url: 'maori-emotional-flow.webp',
     },
     {
       id: 4,
@@ -34,7 +34,7 @@ export async function seed(knex) {
       latitude: -41.30211079793758,
       longitude: 174.7790713775596,
       artist: 'Unknown',
-      image_url: 'example.webp',
+      image_url: 'astro-driver.webp',
     },
     {
       id: 5,
@@ -42,7 +42,7 @@ export async function seed(knex) {
       latitude: -41.29319764387097,
       longitude: 174.77665836322444,
       artist: 'Xoe Hall',
-      image_url: 'example.webp',
+      image_url: 'david-bowie.webp',
     },
   ])
 }
