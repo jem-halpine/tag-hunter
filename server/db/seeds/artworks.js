@@ -9,7 +9,7 @@ export async function seed(knex) {
       location: '2 Mein Street, Newtown',
       latitude: -41.31092143587734,
       longitude: 174.77957489029637,
-      artist: 'Unknown',
+      artist: null,
       image_url: 'te-ao-maori-zoo.webp',
     },
     {
@@ -25,7 +25,7 @@ export async function seed(knex) {
       location: '110 Wawkefield Street, Te Aro',
       latitude: -41.288806234113416,
       longitude: 174.77629558881318,
-      artist: 'Unknown',
+      artist: null,
       image_url: 'maori-emotional-flow.webp',
     },
     {
@@ -33,7 +33,7 @@ export async function seed(knex) {
       location: '4 Douglas Street, Mt Cook',
       latitude: -41.30211079793758,
       longitude: 174.7790713775596,
-      artist: 'Unknown',
+      artist: null,
       image_url: 'astro-driver.webp',
     },
     {
