@@ -15,6 +15,3 @@
 
 # Dotenv env settings
 .env
-
-# package lock
-package-lock.json
