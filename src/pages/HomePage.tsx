@@ -1,13 +1,6 @@
 export default function Home() {
-  return ( 
-    <div className="font-title">Home</div>
-  )
+  return <div>Home</div>
 }
-
-
-
-
-
 
 // import { Link } from 'react-router-dom'
 // // import Nav from './Nav'
