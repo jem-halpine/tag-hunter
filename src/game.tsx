@@ -13,7 +13,7 @@ export function calculateDistance (loc1: LatLng, loc2: LatLng) {
 
 
 // Checks if guess is close enough to win (default 30m)
-export function hasWon(distance: number){
+export function hasFoundArt(distance: number){
   return distance < 25     
 }
 
