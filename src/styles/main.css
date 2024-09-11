@@ -68,3 +68,14 @@ body {
 /* .font {
   font-family: ;
 } */
+ @font-face {
+  font-family: JimmyCollinsDemo;
+  src: url(../../public/fonts/jimmy-collins-font/JimmyCollinsDemoVersion-gx0LY.ttf);
+  /* font- */
+ }
+
+ /* div {
+  font-family: JimmyCollinsDemo;
+  font-size: 40px;
+  font-weight: bold;
+ } */
