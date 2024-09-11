@@ -7,7 +7,7 @@ const server = express()
 
 server.use(express.json())
 
-server.use('/api/v1/artwork', artworkRoutes)
+server.use('/api/v1/artworks', artworkRoutes)
 
 if (process.env.NODE_ENV === 'production') {
   server.use(express.static(Path.resolve('public')))

@@ -6,7 +6,6 @@ const router = Router()
 router.get('/:id', async (req, res) => {
   
   const id  = Number(req.params.id)
-  // const id = 2
 
   try {
     const artwork = await db.getArtworkById(id)
