@@ -77,8 +77,10 @@ export default function GamePage() {
                 </Map>
               </APIProvider>
             </div>
-            <div>{`Latitude: ${userLocation?.lat.toFixed(6)}`}</div>
-            <div>{`Longitude: ${userLocation?.lng.toFixed(6)}`}</div>
+            <div className='p-4 w-full flex justify-evenly'>
+              <div>{`Latitude: ${userLocation?.lat.toFixed(6)}`}</div>
+              <div>{`Longitude: ${userLocation?.lng.toFixed(6)}`}</div>
+            </div>
             <button
               onClick={handleSubmitGuess}
               className="m-10 rounded-md bg-gradient-to-br from-thGold to-thUmber p-4 font-bold text-white shadow-md ring-thGray/50 hover:ring-2"
