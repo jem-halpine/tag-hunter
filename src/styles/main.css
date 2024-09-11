@@ -62,3 +62,9 @@
     @apply bg-background text-foreground;
   }
 }
+body {
+  background-image: url(../../public/images/white-wall.webp);
+}
+/* .font {
+  font-family: ;
+} */
