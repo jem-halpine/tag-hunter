@@ -7,8 +7,9 @@ export async function up(knex) {
     table.varchar('description')
     table.integer('latitude')
     table.integer('longitude')
-    table.varchar('artist')
-    table.varchar('image_url')
+    table.string('artist')
+    table.string('image_url')
+
   })
 }
 
