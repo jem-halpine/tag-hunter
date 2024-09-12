@@ -1,36 +1,9 @@
-<<<<<<< HEAD
 import { useAddUser, useUser } from '@/hooks/useUsers'
-=======
-import { useAuth0 } from '@auth0/auth0-react'
-import { Link } from 'react-router-dom'
-
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuTrigger,
-} from '@/components/ui/dropdown-menu'
-import { Button } from '@/components/ui/button'
-import { Avatar, AvatarImage, AvatarFallback } from '@/components/ui/avatar'
-
->>>>>>> dev
 import { IsAuthenticated } from './IsAuthenticated'
 import { NotAuthenticated } from './NotAuthenticated'
 import { Title } from './Title'
 
 export default function Nav() {
-<<<<<<< HEAD
-  useUser()
-  return (
- 
-    <div>
-      <NotAuthenticated>
-        <LoginButton />
-      </NotAuthenticated>
-      <IsAuthenticated>
-        <LogoutButton />
-      </IsAuthenticated>
-=======
   const { logout, loginWithRedirect, user } = useAuth0()
 
   const handleSignIn = () => {
@@ -91,7 +64,6 @@ export default function Nav() {
         </IsAuthenticated>
         </div>
       </div>
->>>>>>> dev
     </div>
   )
 }
