@@ -9,3 +9,4 @@ export async function getAllUsers(): Promise<Users[]> {
 export async function addUser(user: User): Promise<User[]> {
   return db('users').insert(user)
 }
+
