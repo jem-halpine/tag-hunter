@@ -16,7 +16,7 @@ document.addEventListener('DOMContentLoaded', () => {
       clientId="4erW3XuFmNel4WLTFlL7zKKpw6Vv3CBO"
       authorizationParams={{
         redirect_uri: window.location.origin,
-        // TODO:audience: 'https://taghunter/api',
+        audience: 'https://tag-hunter/api',
       }}
     >
       <QueryClientProvider client={queryClient}>
