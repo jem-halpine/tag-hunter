@@ -36,7 +36,9 @@ export default function Nav() {
           Sign In
         </Button>
       </NotAuthenticated>
+
       <IsAuthenticated>
+        <img src={user?.picture} alt="user profile"></img>
         <DropdownMenu>
           <DropdownMenuTrigger>
             <Button variant="default">{user?.name}</Button>
