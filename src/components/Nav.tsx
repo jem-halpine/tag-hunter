@@ -1,12 +1,22 @@
 import { useAuth0 } from '@auth0/auth0-react'
-import { Button } from '@/components/ui/button'
 import { Link } from 'react-router-dom'
+
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from '@/components/ui/dropdown-menu'
+import { Button } from '@/components/ui/button'
+
 import { IsAuthenticated } from './IsAuthenticated'
 import { NotAuthenticated } from './NotAuthenticated'
 import { Title } from './Title'
 
+//  TODO: add link for Profile Page
+
 export default function Nav() {
-  const { logout, loginWithRedirect } = useAuth0()
+  const { logout, loginWithRedirect, user } = useAuth0()
 
   const handleSignIn = () => {
     loginWithRedirect()
@@ -17,8 +27,8 @@ export default function Nav() {
   }
 
   return (
-    <div className='flex justify-between mt-12 ml-12 mr-12'>
-      <Link to="/"> 
+    <div className="ml-12 mr-12 mt-12 flex justify-between">
+      <Link to="/">
         <Title title="Tag Hunter"></Title>
       </Link>
       <NotAuthenticated>
@@ -27,9 +37,17 @@ export default function Nav() {
         </Button>
       </NotAuthenticated>
       <IsAuthenticated>
-        <Button variant="outline" onClick={handleSignOut}>
-          Sign Out
-        </Button>
+        <DropdownMenu>
+          <DropdownMenuTrigger>
+            <Button variant="default">{user?.name}</Button>
+          </DropdownMenuTrigger>
+          <DropdownMenuContent>
+            <DropdownMenuItem>Profile</DropdownMenuItem>
+            <DropdownMenuItem onClick={handleSignOut}>
+              Sign Out
+            </DropdownMenuItem>
+          </DropdownMenuContent>
+        </DropdownMenu>
       </IsAuthenticated>
     </div>
   )
