@@ -18,7 +18,17 @@ router.get('/', async (req, res) => {
   }
 })
 
-//GET by id
+//GET /api/v1/users/:id
+router.get('/', checkJwt, async (req: JwtRequest, res) => {
+  const auth0id = req.auth?.sub
+  try {
+    const user = await db.getUserById(auth0id as string)
+    res.json({ user })
+  } catch (error) {
+    console.error(error)
+    res.sendStatus(500)
+  }
+})
 
 //POST /api/v1/users
 router.post('/', checkJwt, async (req: JwtRequest, res) => {
