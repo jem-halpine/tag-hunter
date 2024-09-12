@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom'
 
 export default function Home() {
   return (
-    <div className="flex flex-col items-center justify-center">
+    <div className="ml-12 mr-12 flex flex-col items-center justify-center">
       <Button variant="default" size="lg">
         <Link to="/play">Start Game</Link>
       </Button>

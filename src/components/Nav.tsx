@@ -8,13 +8,11 @@ import {
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu'
 import { Button } from '@/components/ui/button'
+import { Avatar, AvatarImage, AvatarFallback } from '@/components/ui/avatar'
 
 import { IsAuthenticated } from './IsAuthenticated'
 import { NotAuthenticated } from './NotAuthenticated'
 import { Title } from './Title'
-import { Avatar } from '@radix-ui/react-avatar'
-
-//  TODO: add link for Profile Page
 
 export default function Nav() {
   const { logout, loginWithRedirect, user } = useAuth0()
@@ -32,46 +30,50 @@ export default function Nav() {
       <Link to="/">
         <Title title="Tag Hunter"></Title>
       </Link>
-      <NotAuthenticated>
-        <Button variant="default" onClick={handleSignIn}>
-          Sign In
-        </Button>
-      </NotAuthenticated>
-
-      <IsAuthenticated>
-          <Avatar>
-            <img src={user?.picture} alt="user profile"></img>
+      <div>
+        <NotAuthenticated>
+          <Button variant="default" onClick={handleSignIn}>
+            Sign In
+          </Button>
+        </NotAuthenticated>
+      </div>
+      <div className="flex items-center">
+        <IsAuthenticated>
+          <Avatar className="mr-2">
+            <AvatarImage src={user?.picture} alt="user profile"></AvatarImage>
+            <AvatarFallback>CN</AvatarFallback>
           </Avatar>
-        <DropdownMenu>
-          <DropdownMenuTrigger>
-            <Button variant="default">
-              {user?.nickname}{' '}
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                fill="none"
-                viewBox="0 0 24 24"
-                strokeWidth={1.5}
-                stroke="currentColor"
-                className="size-6"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  d="m19.5 8.25-7.5 7.5-7.5-7.5"
-                />
-              </svg>
-            </Button>
-          </DropdownMenuTrigger>
-          <DropdownMenuContent>
-            <DropdownMenuItem>
-              <Link to="/profile">Profile</Link>
-            </DropdownMenuItem>
-            <DropdownMenuItem onClick={handleSignOut}>
-              Sign Out
-            </DropdownMenuItem>
-          </DropdownMenuContent>
-        </DropdownMenu>
-      </IsAuthenticated>
+          <DropdownMenu>
+            <DropdownMenuTrigger>
+              <Button variant="default">
+                {user?.nickname}{' '}
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  strokeWidth={1.5}
+                  stroke="currentColor"
+                  className="size-6"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    d="m19.5 8.25-7.5 7.5-7.5-7.5"
+                  />
+                </svg>
+              </Button>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent>
+              <DropdownMenuItem>
+                <Link to="/profile">Profile</Link>
+              </DropdownMenuItem>
+              <DropdownMenuItem onClick={handleSignOut}>
+                Sign Out
+              </DropdownMenuItem>
+            </DropdownMenuContent>
+          </DropdownMenu>
+        </IsAuthenticated>
+      </div>
     </div>
   )
 }
