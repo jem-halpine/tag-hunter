@@ -1,5 +1,5 @@
-import { useQuery } from '@tanstack/react-query'
-import { getArtworkById } from '../apis/artworks'
+import { useQuery, useQueryClient } from '@tanstack/react-query'
+import { getRandomArtwork } from '../apis/artworks'
 import {
   AdvancedMarker,
   APIProvider,
@@ -10,10 +10,11 @@ import { useState } from 'react'
 import { LatLng } from 'models/models'
 import * as game from '../game'
 import SprayCan from '@/icons/SprayCan'
+import { query } from 'express'
 
 export default function GamePage() {
   // TODO: randomly pick artwork on page load
-  const artworkID = 1
+  // const artworkID = 1
   const wellington = { lat: -41.29244, lng: 174.77876 }
 
   const [showMarker, setShowMarker] = useState(false)
@@ -22,13 +23,15 @@ export default function GamePage() {
   const [gameMessage, setGameMessage] = useState<string>('')
   const [hasFound, setHasFound] = useState(false)
 
+  const queryClient = useQueryClient()
+
   const {
     data: artwork,
     isPending,
     isError,
   } = useQuery({
-    queryKey: ['artwork', artworkID],
-    queryFn: () => getArtworkById(artworkID),
+    queryKey: ['artwork'],
+    queryFn: () => getRandomArtwork(),
   })
 
   if (isPending) {
@@ -42,7 +45,7 @@ export default function GamePage() {
   return (
     <>
       <div id="container" className="flex w-full flex-col items-center p-10">
-        <div className="flex w-1/3 flex-col items-center p-10">
+        <div className="flex w-1/2 flex-col items-center p-10">
           <h1>Welcome to Tag Hunter!</h1>
           <p className="text-center">
             Have you seen this art before? Use the mouse to drag the pin around
@@ -50,12 +53,15 @@ export default function GamePage() {
           </p>
         </div>
         <div className="flex w-full flex-wrap justify-evenly">
-          <div>
+          <div className='flex flex-col'>
             <img
               className="w-[30vw] min-w-[200px]  rounded-md shadow-md"
               src={`images/${artwork.imageUrl}`}
               alt=""
             />
+            { (hasFound || guessCount < 1) &&
+              <button className='m-10' onClick={playAgain}>Play again!</button>
+            }
           </div>
 
           <div className="flex flex-col items-center">
@@ -88,7 +94,6 @@ export default function GamePage() {
               </APIProvider>
             </div>
             <div className="flex w-full justify-evenly p-4">
-              <div>Current Position:</div>
               <div>{`Latitude: ${userLocation?.lat.toFixed(6)}`}</div>
               <div>{`Longitude: ${userLocation?.lng.toFixed(6)}`}</div>
             </div>
@@ -121,7 +126,7 @@ export default function GamePage() {
             {hasFound && <div>{gameMessage}</div>}
 
             {guessCount < 1 && (
-              <div>Not this time. Get out on the street and get hunting!</div>
+              <div>Not this time... Get out on the street and get hunting!</div>
             )}
           </div>
         </div>
@@ -153,6 +158,17 @@ export default function GamePage() {
 
       setGameMessage(game.failureMessage(dist))
       setGuessCount(guessCount - 1)
+    }
+  }
+
+  function playAgain(){
+    if(hasFound||guessCount<1){
+      queryClient.invalidateQueries()
+      setShowMarker(false)
+      setGuessCount(3)
+      setUserLocation(wellington)
+      setGameMessage('')
+      setHasFound(false)
     }
   }
 }

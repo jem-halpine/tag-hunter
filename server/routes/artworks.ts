@@ -13,7 +13,16 @@ router.get('/:id', async (req, res) => {
   } catch (error) {
     res.status(500)
   }
+})
 
+router.get('/', async (req, res) => {
+  
+  try {
+    const artwork = await db.getAllArtwork()
+    res.json(artwork)
+  } catch (error) {
+    res.status(500)
+  }
 })
 
 export default router
