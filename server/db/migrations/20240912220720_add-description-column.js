@@ -4,7 +4,7 @@
 export async function up(knex) {
   return knex.schema.table('artworks', (table) => {
     table.string('description')
-    table.string('user_id')
+    table.string('added_by_user_id')
   })
 }
 
