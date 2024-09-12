@@ -39,6 +39,7 @@ router.post('/', checkJwt, async (req: JwtRequest, res) => {
       ...newUser,
       auth0id,
     })
+    res.json(users)
   } catch (error) {
     console.error(error)
     res.sendStatus(500)

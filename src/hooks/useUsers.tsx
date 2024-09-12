@@ -14,6 +14,7 @@ export function useUser() {
     queryKey: ['user'],
     queryFn: async () => {
       const token = await getAccessTokenSilently()
+      // console.log('token', token)
       return API.getUserById({ token })
     },
     enabled: !!user,
