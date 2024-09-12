@@ -15,7 +15,7 @@ export default function GamePage() {
   // TODO: randomly pick artwork on page load
   const artworkID = 1
   const wellington = { lat: -41.29244, lng: 174.77876 }
-  
+
   const [showMarker, setShowMarker] = useState(false)
   const [guessCount, setGuessCount] = useState(3)
   const [userLocation, setUserLocation] = useState<LatLng | null>(wellington)
@@ -42,6 +42,13 @@ export default function GamePage() {
   return (
     <>
       <div id="container" className="flex w-full flex-col items-center p-10">
+        <div className="flex w-1/3 flex-col items-center p-10">
+          <h1>Welcome to Tag Hunter!</h1>
+          <p className="text-center">
+            Have you seen this art before? Use the mouse to drag the pin around
+            the map then hit submit to see if you've found it!
+          </p>
+        </div>
         <div className="flex w-full flex-wrap justify-evenly">
           <div>
             <img
@@ -80,40 +87,42 @@ export default function GamePage() {
                 </Map>
               </APIProvider>
             </div>
-                      <div className="flex w-full justify-evenly p-4">
-                        <div>Current Position:</div>
-                        <div>{`Latitude: ${userLocation?.lat.toFixed(6)}`}</div>
-                        <div>{`Longitude: ${userLocation?.lng.toFixed(6)}`}</div>
-                      </div>
-            
+            <div className="flex w-full justify-evenly p-4">
+              <div>Current Position:</div>
+              <div>{`Latitude: ${userLocation?.lat.toFixed(6)}`}</div>
+              <div>{`Longitude: ${userLocation?.lng.toFixed(6)}`}</div>
+            </div>
+
             {guessCount > 0 && !hasFound && (
               <>
-                {/* <div className={guessCount>0 ? "" : "invisible"}>{`Guesses Remaining: ${guessCount}`}</div> */}
-                <div className='flex gap-5'>
+                <div className="flex gap-5">
                   <div> Mistakes Remaining:</div>
-                  <div className={guessCount > 0 ? "" : "invisible"}><SprayCan/></div>
-                  <div className={guessCount > 1 ? "" : "invisible"}><SprayCan/></div>
-                  <div className={guessCount > 2 ? "" : "invisible"}><SprayCan/></div>
+                  <div className={guessCount > 0 ? '' : 'invisible'}>
+                    <SprayCan />
+                  </div>
+                  <div className={guessCount > 1 ? '' : 'invisible'}>
+                    <SprayCan />
+                  </div>
+                  <div className={guessCount > 2 ? '' : 'invisible'}>
+                    <SprayCan />
+                  </div>
                 </div>
-                               
+
                 <button
                   onClick={handleSubmitGuess}
-                  className="m-10 rounded-md bg-gradient-to-br from-thGold to-thUmber p-4 font-bold text-white shadow-md ring-thGray/50 hover:ring-2"
+                  className="m-5 rounded-md bg-gradient-to-br from-thGold to-thUmber p-4 px-10 font-bold text-white shadow-md ring-thGray/50 hover:ring-2"
                 >
-                  Submit Guess
+                  Submit
                 </button>
                 {gameMessage && <div>{gameMessage}</div>}
-             </>
+              </>
             )}
 
-            {
-              hasFound && <div>{gameMessage}</div>
-            }
+            {hasFound && <div>{gameMessage}</div>}
 
-            {
-              guessCount < 1 && <div>Not this time. Try again tomorrow!</div> 
-            }
-            
+            {guessCount < 1 && (
+              <div>Not this time. Get out on the street and get hunting!</div>
+            )}
           </div>
         </div>
       </div>
@@ -134,8 +143,8 @@ export default function GamePage() {
         { lat: artwork.latitude, lng: artwork.longitude },
         userLocation,
       )
-      
-      if(game.hasFoundArt(dist)){
+
+      if (game.hasFoundArt(dist)) {
         setHasFound(true)
         setShowMarker(true)
         setGameMessage(`You found it! (${dist.toFixed(1)}m away)`)
@@ -144,7 +153,6 @@ export default function GamePage() {
 
       setGameMessage(game.failureMessage(dist))
       setGuessCount(guessCount - 1)
-
     }
   }
 }
