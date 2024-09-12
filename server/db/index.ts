@@ -1,3 +1,4 @@
+import ArtworkData from '@/models/artwork'
 import connection from './connection'
 
 const db = connection
@@ -16,7 +17,7 @@ export async function getArtworkById(id: number) {
     .first()
 }
 
-export function getArtworks() {
+export function getArtworks(): Promise<ArtworkData[]> {
   return db('artworks').select(
     'id',
     'location',

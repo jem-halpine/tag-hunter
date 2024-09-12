@@ -17,26 +17,16 @@ export default function Gallery() {
   if (isError) {
     return <>Error</>
   }
-  
-//   return (
-//     <div>
-//       {artwork?.map((item) => (
-//         <div key={item.id}>
-//           <img src={item.imageUrl} alt={item.title} />
-//           <p>{item.title}</p>
-//         </div>
-//       ))}
-//     </div>
-//   )
-// }
-  return ( // Image from tailwind
-      
-      <div>
-        {artwork.map((item) => {
-          <div key={item.id}>
-          <img src={item.} alt="" />
-        })}
-      </div>
-    )
-  }
-  
+
+  return (
+    // Image from tailwind
+
+    <div>
+      {artwork.map((item) => (
+        <div key={item.id}>
+          <img src={`/images/${item.imageUrl}`} alt={item.description} />
+        </div>
+      ))}
+    </div>
+  )
+}
