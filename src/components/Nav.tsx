@@ -36,7 +36,7 @@ export default function Nav() {
             Sign In
           </Button>
         </NotAuthenticated>
-      </div>
+        
       <div className="flex items-center">
         <IsAuthenticated>
           <Avatar className="mr-2">
@@ -73,6 +73,7 @@ export default function Nav() {
             </DropdownMenuContent>
           </DropdownMenu>
         </IsAuthenticated>
+        </div>
       </div>
     </div>
   )
