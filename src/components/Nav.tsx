@@ -41,10 +41,12 @@ export default function Nav() {
         <img src={user?.picture} alt="user profile"></img>
         <DropdownMenu>
           <DropdownMenuTrigger>
-            <Button variant="default">{user?.name}</Button>
+            <Button variant="default">{user?.nickname}</Button>
           </DropdownMenuTrigger>
           <DropdownMenuContent>
-            <DropdownMenuItem>Profile</DropdownMenuItem>
+            <DropdownMenuItem>
+              <Link to="/profile">Profile</Link>
+            </DropdownMenuItem>
             <DropdownMenuItem onClick={handleSignOut}>
               Sign Out
             </DropdownMenuItem>
