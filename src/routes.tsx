@@ -4,6 +4,7 @@ import HomePage from './pages/HomePage'
 import GamePage from './pages/GamePage'
 import Profile from './pages/Profile'
 import Gallery from './pages/GalleryPage'
+import ViewArt from './pages/ViewArt'
 
 export default createRoutesFromElements(
   <Route path="/" element={<Layout />}>
@@ -11,5 +12,6 @@ export default createRoutesFromElements(
     <Route path="/play" element={<GamePage />} />
     <Route path="/profile" element={<Profile />} />
     <Route path="/gallery" element={<Gallery />} />
+    <Route path="/gallery/:id" element={<ViewArt />} />
   </Route>,
 )
