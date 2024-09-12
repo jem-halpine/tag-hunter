@@ -10,7 +10,6 @@ import { useState } from 'react'
 import { LatLng } from 'models/models'
 import * as game from '../game'
 import SprayCan from '@/icons/SprayCan'
-import { query } from 'express'
 
 export default function GamePage() {
   // TODO: randomly pick artwork on page load
@@ -18,7 +17,7 @@ export default function GamePage() {
   const wellington = { lat: -41.29244, lng: 174.77876 }
 
   const [showMarker, setShowMarker] = useState(false)
-  const [guessCount, setGuessCount] = useState(3)
+  const [guessCount, setGuessCount] = useState(5)
   const [userLocation, setUserLocation] = useState<LatLng | null>(wellington)
   const [gameMessage, setGameMessage] = useState<string>('')
   const [hasFound, setHasFound] = useState(false)
@@ -111,6 +110,12 @@ export default function GamePage() {
                   <div className={guessCount > 2 ? '' : 'invisible'}>
                     <SprayCan />
                   </div>
+                  <div className={guessCount > 3 ? '' : 'invisible'}>
+                    <SprayCan />
+                  </div>
+                  <div className={guessCount > 4 ? '' : 'invisible'}>
+                    <SprayCan />
+                  </div>
                 </div>
 
                 <button
@@ -165,7 +170,7 @@ export default function GamePage() {
     if(hasFound||guessCount<1){
       queryClient.invalidateQueries()
       setShowMarker(false)
-      setGuessCount(3)
+      setGuessCount(5)
       setUserLocation(wellington)
       setGameMessage('')
       setHasFound(false)
