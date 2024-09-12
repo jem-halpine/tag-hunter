@@ -12,6 +12,7 @@ import { Button } from '@/components/ui/button'
 import { IsAuthenticated } from './IsAuthenticated'
 import { NotAuthenticated } from './NotAuthenticated'
 import { Title } from './Title'
+import { Avatar } from '@radix-ui/react-avatar'
 
 //  TODO: add link for Profile Page
 
@@ -38,7 +39,9 @@ export default function Nav() {
       </NotAuthenticated>
 
       <IsAuthenticated>
-        <img src={user?.picture} alt="user profile"></img>
+          <Avatar>
+            <img src={user?.picture} alt="user profile"></img>
+          </Avatar>
         <DropdownMenu>
           <DropdownMenuTrigger>
             <Button variant="default">
