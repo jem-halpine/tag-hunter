@@ -11,6 +11,8 @@ export async function seed(knex) {
       longitude: 174.77957489029637,
       artist: null,
       image_url: 'te-ao-maori-zoo.webp',
+      description: 'art',
+      user_id: '1',
     },
     {
       id: 2,
@@ -19,6 +21,8 @@ export async function seed(knex) {
       longitude: 174.7798757155056,
       artist: 'Xoe Hall',
       image_url: 'mexican-festa.webp',
+      description: 'art',
+      user_id: '1',
     },
     {
       id: 3,
@@ -27,6 +31,8 @@ export async function seed(knex) {
       longitude: 174.77629558881318,
       artist: null,
       image_url: 'maori-emotional-flow.webp',
+      description: 'art',
+      user_id: '1',
     },
     {
       id: 4,
@@ -35,6 +41,8 @@ export async function seed(knex) {
       longitude: 174.7790713775596,
       artist: null,
       image_url: 'astro-driver.webp',
+      description: 'art',
+      user_id: '1',
     },
     {
       id: 5,
@@ -43,6 +51,8 @@ export async function seed(knex) {
       longitude: 174.77665836322444,
       artist: 'Xoe Hall',
       image_url: 'david-bowie.webp',
+      description: 'art',
+      user_id: '1',
     },
   ])
 }
