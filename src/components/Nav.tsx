@@ -12,7 +12,6 @@ import { Avatar, AvatarImage, AvatarFallback } from '@/components/ui/avatar'
 
 import { IsAuthenticated } from './IsAuthenticated'
 import { NotAuthenticated } from './NotAuthenticated'
-import { Title } from './Title'
 
 export default function Nav() {
   const { logout, loginWithRedirect, user } = useAuth0()
@@ -26,9 +25,9 @@ export default function Nav() {
   }
 
   return (
-    <div className="ml-12 mr-12 mt-12 flex justify-between">
+    <div className="ml-12 mr-12 mt-12 flex justify-between items-center">
       <Link to="/">
-        <Title title="Tag Hunter"></Title>
+        <h1 className='font-pageName text-7xl'>Tag Hunter</h1>
       </Link>
       <div>
         <NotAuthenticated>
