@@ -8,7 +8,7 @@ export default function Footer() {
   //  TODO: add icon links
 
   return (
-    <div className="mb-12 ml-12 mr-12 flex justify-between">
+    <div className="fixed bottom-0 left-0 right-0 mb-12 ml-12 mr-12 flex justify-between">
       <div className="flex items-center justify-center">
         <MdCopyright />
         <p className="text-xs">2024 TAG HUNTER</p>
