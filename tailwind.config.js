@@ -5,8 +5,8 @@ export default {
   theme: {
     extend: {
       fontFamily: {
-        title: ['JimmyCollinsDemo', 'Comic Sans']
-
+        title: ['JimmyCollinsDemo', 'Comic Sans'], // If you see comic sans there is an issue with the font we need to fix ASAP
+        pageName: ['DocallismeOnStreet', 'Comic Sans'],
       },
       colors: {
         thBlack: '#211f20',
