@@ -28,7 +28,7 @@ export default function Nav() {
   return (
     <div className="ml-12 mr-12 mt-12 flex justify-between">
       <Link to="/">
-        <Title title="Tag Hunter"></Title>
+        <h1 className='font-pageName text-7xl'>Tag Hunter</h1>
       </Link>
       <div>
         <NotAuthenticated>
