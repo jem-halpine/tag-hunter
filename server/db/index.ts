@@ -17,7 +17,7 @@ export async function getArtworkById(id: number) {
     .first()
 }
 
-export function getArtworks(): Promise<ArtworkData[]> {
+export function getArtworks(page: number): Promise<ArtworkData[]> { //getAllArtwork
   return db('artworks').select(
     'id',
     'location',
@@ -27,5 +27,9 @@ export function getArtworks(): Promise<ArtworkData[]> {
     'image_url as imageUrl',
     'user_id as userId',
     'description',
-  )
+  ).limit(5 * page)
+}
+
+export function getArtworksLength() {
+  return db('artworks').select().count({count:'*'})
 }
