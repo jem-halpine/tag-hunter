@@ -17,7 +17,11 @@ export default function Nav() {
   const { logout, loginWithRedirect, user } = useAuth0()
 
   const handleSignIn = () => {
-    loginWithRedirect()
+    loginWithRedirect({
+      authorizationParams: {
+        redirectUri: `${window.location.origin}/register`,
+      },
+    })
   }
 
   const handleSignOut = () => {
