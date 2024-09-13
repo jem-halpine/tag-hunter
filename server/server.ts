@@ -3,6 +3,7 @@ import * as Path from 'node:path'
 
 import artworkRoutes from './routes/artworks.ts'
 import playRoutes from './routes/play.ts'
+import usersRoutes from './routes/usersRoutes.ts'
 
 const server = express()
 
@@ -10,6 +11,7 @@ server.use(express.json())
 
 server.use('/api/v1/artworks', artworkRoutes)
 server.use('/api/v1/play', playRoutes)
+server.use('/api/v1/users', usersRoutes)
 
 if (process.env.NODE_ENV === 'production') {
   server.use(express.static(Path.resolve('public')))

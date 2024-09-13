@@ -4,6 +4,10 @@ export default {
   content: ['./index.html', './src/**/*.tsx'],
   theme: {
     extend: {
+      fontFamily: {
+        title: ['JimmyCollinsDemo', 'Comic Sans']
+
+      },
       colors: {
         thBlack: '#211f20',
         thGray: '#75767a',
