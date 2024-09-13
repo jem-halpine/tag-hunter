@@ -13,9 +13,23 @@ import { Avatar, AvatarImage, AvatarFallback } from '@/components/ui/avatar'
 import { IsAuthenticated } from './IsAuthenticated'
 import { NotAuthenticated } from './NotAuthenticated'
 import { Title } from './Title'
+import { useUser } from '@/hooks/useUsers'
+// import { useEffect } from 'react'
 
 export default function Nav() {
-  const { logout, loginWithRedirect, user } = useAuth0()
+  const { logout, loginWithRedirect, user, isAuthenticated } = useAuth0()
+  useUser()
+  // const addUser = useUser()
+
+  // useEffect(() => {
+  //   if (isAuthenticated && user) {
+  //     addUser.add.mutate({
+  //       auth0id: user.auth0id,
+  //       email: user.email,
+  //       name: user.name,
+  //     })
+  //   }
+  // }, [isAuthenticated, user, addUser])
 
   const handleSignIn = () => {
     loginWithRedirect()
