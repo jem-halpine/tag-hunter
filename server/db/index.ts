@@ -1,5 +1,5 @@
 import connection from './connection'
-import { Artwork } from 'models/models'
+import { Artwork, Game, GameData } from 'models/models'
 
 const db = connection
 
@@ -61,4 +61,44 @@ export async function getRandomArtwork(): Promise<Artwork> {
       'artist',
     )
     .first()
+}
+
+export async function getGames(): Promise<Game[]> {
+  return await db('games')
+    .join('users','users.auth0Id','=','games.user_id')
+    .select(
+      "games.id",
+      "games.timestamp",
+      "games.artwork_id as artworkId",
+      "users.name as username",
+      "users.auth0Id",
+      "games.art_was_found as artWasFound",
+      "games.guesses_used as guessesUsed",
+      "games.rating",
+    )  
+}
+
+
+export async function addGame(data: GameData) {
+  
+  const { 
+    auth0Id: user_id,
+    artworkId: artwork_id,
+    artWasFound: art_was_found,
+    guessesUsed: guesses_used,
+    rating
+  } = data
+
+  const timestamp = new Date(Date.now())
+  
+  return await db('games').insert(
+    {
+      user_id,
+      artwork_id,
+      art_was_found,
+      guesses_used,
+      rating,
+      timestamp
+    }
+  )
 }
