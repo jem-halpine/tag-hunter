@@ -10,18 +10,20 @@ import { useEffect, useRef, useState } from 'react'
 import { LatLng } from 'models/models'
 import * as game from '../game'
 import SprayCan from '@/icons/SprayCan'
+import { IsAuthenticated } from '@/components/IsAuthenticated'
+import { NotAuthenticated } from '@/components/NotAuthenticated'
 
 export default function GamePage() {
   // TODO: randomly pick artwork on page load
   // const artworkID = 1
   const wellington = { lat: -41.29244, lng: 174.77876 }
+  const welcome =
+    'Use the mouse to drag the pin around the map then hit submit to see if you have found it!'
 
   const [showMarker, setShowMarker] = useState(false)
   const [guessCount, setGuessCount] = useState(5)
   const [userLocation, setUserLocation] = useState<LatLng | null>(wellington)
-  const [gameMessage, setGameMessage] = useState<string>(
-    'Use the mouse to drag the pin around the map then hit submit to see if you have found it!',
-  )
+  const [gameMessage, setGameMessage] = useState<string>(welcome)
   const [hasFound, setHasFound] = useState(false)
 
   const queryClient = useQueryClient()
@@ -69,19 +71,19 @@ export default function GamePage() {
 
   return (
     <>
-      <div id="container" className="flex flex-wrap justify-center">
-        <div
-          id="game-display"
-          className="flex w-1/2 flex-col items-center bg-red-400 grow"
-        >
-          <div
-            id="art-container"
-            className="flex flex-col items-center bg-green-500 p-10"
-          >
-            <div id="game-message" className="p-6">
-              {gameMessage}
+      <div id="container" className="flex flex-wrap justify-center py-10">
+        <div id="game-display" className="flex flex-col items-center">
+          <div id="art-container" className="flex flex-col items-center">
+            <div id="game-message" className="h-[15vh] py-10">
+              {guessCount > 0 && <p>{gameMessage}</p>}
+
+              {guessCount < 1 && (
+                <div>
+                  Not this time... Get out on the street and get hunting!
+                </div>
+              )}
             </div>
-            <div id="art-image" className='flex flex-col items-center'>
+            <div id="art-image" className="flex flex-col items-center">
               <img
                 className="w-3/4 rounded-md shadow-md"
                 src={`images/${artwork.imageUrl}`}
@@ -89,29 +91,45 @@ export default function GamePage() {
               />
             </div>
           </div>
-          <div id="streetview" className="size-[200px]">
+          <IsAuthenticated>
             <div
-              ref={streetViewRef}
-              className="h-full w-full rounded-xl border-2 border-gray-300"
-            />
-          </div>
+              id="streetview"
+              className="my-10 h-[200px] w-1/2 min-w-[200px]"
+            >
+              <div
+                ref={streetViewRef}
+                className="size-full rounded-xl border-2 border-gray-300 p-10"
+              />
+            </div>
+          </IsAuthenticated>
+          <NotAuthenticated>
+            <div className="p-10">
+              Log in or Sign up to unlock the Streetview portal!
+            </div>
+          </NotAuthenticated>
         </div>
         <div
           id="game-interface"
-          className="flex flex-col items-center bg-red-600 w-[700px]"
+          className="flex w-1/2 min-w-[700px] flex-col items-center"
         >
-          <div id="submission" className="flex w-full px-10">
-            <button
-              onClick={handleSubmitGuess}
-              className="m-5 rounded-md bg-gradient-to-br from-thGold to-thUmber p-4 px-10 font-bold text-white shadow-md ring-thGray/50 hover:ring-2"
-            >
-              Submit
-            </button>
-            <div
-              id="mistakes-container"
-              className="flex w-2/3 justify-between p-10"
-            >
-              {guessCount > 0 && !hasFound && (
+          {hasFound ||
+            (guessCount < 1 && (
+              <div className="p-10">
+                <button onClick={playAgain}>Play again!</button>
+              </div>
+            ))}
+          {guessCount > 0 && !hasFound && (
+            <div id="submission" className="flex w-full max-w-[600px] px-10">
+              <button
+                onClick={handleSubmitGuess}
+                className="m-5 rounded-md bg-gradient-to-br from-thGold to-thUmber p-4 px-10 font-bold text-white shadow-md ring-thGray/50 hover:ring-2"
+              >
+                Submit
+              </button>
+              <div
+                id="mistakes-container"
+                className="flex w-2/3 justify-between p-10"
+              >
                 <>
                   <div className={guessCount > 0 ? '' : 'invisible'}>
                     <SprayCan />
@@ -129,11 +147,14 @@ export default function GamePage() {
                     <SprayCan />
                   </div>
                 </>
-              )}
+              </div>
             </div>
-          </div>
-          <div id="map-container" className="h- w-full">
-            <div id="map" className="h-[600px] w-full px-10 py-5">
+          )}
+          <div id="map-container" className="h- w-full ">
+            <div
+              id="map"
+              className="mx-10 h-[600px] w-full border-2 border-thGray drop-shadow-lg"
+            >
               <APIProvider apiKey={'AIzaSyAniaK3l1jH7gSgpiNd-PyBMB0ygsy8QXA'}>
                 <Map
                   defaultCenter={wellington}
@@ -161,8 +182,8 @@ export default function GamePage() {
                 </Map>
               </APIProvider>
             </div>
-            <div id="coordinates">
-              <div className="flex w-full justify-evenly px-10 ">
+            <div id="coordinates" className="flex flex-col items-center">
+              <div className="flex gap-5 p-2">
                 <div>{`Latitude: ${userLocation?.lat.toFixed(6)}`}</div>
                 <div>{`Longitude: ${userLocation?.lng.toFixed(6)}`}</div>
               </div>
@@ -170,126 +191,6 @@ export default function GamePage() {
           </div>
         </div>
       </div>
-
-      {/*}
-      <div id="container" className="flex w-full flex-col items-center p-10">
-        <div className="grid grid-cols-2 ">
-
-        <div className="flex flex-col items-center">
-          <p className="text-center p-5">
-            Use the mouse to drag the pin around
-            the map then hit submit to see if you have found it!
-          </p>
-
-
-          {guessCount > 0 && !hasFound && (
-              <>
-                <div className="flex gap-5">
-                  <div> Mistakes Remaining:</div>
-                  <div className={guessCount > 0 ? '' : 'invisible'}>
-                    <SprayCan />
-                  </div>
-                  <div className={guessCount > 1 ? '' : 'invisible'}>
-                    <SprayCan />
-                  </div>
-                  <div className={guessCount > 2 ? '' : 'invisible'}>
-                    <SprayCan />
-                  </div>
-                  <div className={guessCount > 3 ? '' : 'invisible'}>
-                    <SprayCan />
-                  </div>
-                  <div className={guessCount > 4 ? '' : 'invisible'}>
-                    <SprayCan />
-                  </div>
-                </div>
-
-                <button
-                  onClick={handleSubmitGuess}
-                  className="m-5 rounded-md bg-gradient-to-br from-thGold to-thUmber p-4 px-10 font-bold text-white shadow-md ring-thGray/50 hover:ring-2"
-                >
-                  Submit
-                </button>
-                {gameMessage && <div>{gameMessage}</div>}
-              </>
-            )}
-
-            {hasFound && <div>{gameMessage}</div>}
-
-            {guessCount < 1 && (
-              <div>Not this time... Get out on the street and get hunting!</div>
-            )}
-
-
-          <div className="flex w-full justify-evenly p-4">
-              <div>{`Latitude: ${userLocation?.lat.toFixed(6)}`}</div>
-              <div>{`Longitude: ${userLocation?.lng.toFixed(6)}`}</div>
-            </div>
-
-
-          </div>
-
-          <div className="flex flex-col items-center">
-            <img
-              className="w-[30vw] min-w-[200px]  rounded-md shadow-md"
-              src={`images/${artwork.imageUrl}`}
-              alt=""
-            />
-          </div>
-
-        </div>
-
-
-
-        <div className="flex w-full flex-wrap justify-evenly">
-
-            {(hasFound || guessCount < 1) && (
-              <button className="m-10" onClick={playAgain}>
-                Play again!
-              </button>
-            )}
-          <div className="flex flex-col items-center">
-            <div className="size-[40vw] max-h-[60vh] border-2 border-thGray shadow-md">
-              <APIProvider apiKey={'AIzaSyAniaK3l1jH7gSgpiNd-PyBMB0ygsy8QXA'}>
-                <Map
-                  defaultCenter={wellington}
-                  defaultZoom={13}
-                  mapId="gameMap"
-                  minZoom={14}
-                  fullscreenControl={null}
-                >
-                  <AdvancedMarker
-                    position={userLocation}
-                    draggable={true}
-                    onDrag={handleDragEnd}
-                  />
-
-                  {showMarker && (
-                    <AdvancedMarker
-                      position={{
-                        lat: artwork.latitude,
-                        lng: artwork.longitude,
-                      }}
-                    >
-                      <Pin background={'gold'} borderColor={'black'} />
-                    </AdvancedMarker>
-                  )}
-                </Map>
-              </APIProvider>
-              </div>
-
-
-            <div
-              ref={streetViewRef}
-              className="h-80 w-1/4 border-2 border-gray-300 shadow-lg"
-              />
-
-
-
-
-          </div>
-        </div>
-      </div>
-      {*/}
     </>
   )
 
@@ -326,7 +227,7 @@ export default function GamePage() {
       setShowMarker(false)
       setGuessCount(5)
       setUserLocation(wellington)
-      setGameMessage('')
+      setGameMessage(welcome)
       setHasFound(false)
     }
   }
