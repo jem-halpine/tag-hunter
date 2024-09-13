@@ -72,7 +72,7 @@ body::before {
   left: 0;
   width: 100%;
   height: 100%;
-  background-image: url('../../public/images/white-wall.webp');
+  background-image: url('../../images/white-wall.webp');
   background-size: cover;
   background-position: center;
   background-attachment: fixed;
@@ -82,5 +82,9 @@ body::before {
 
 @font-face {
   font-family: JimmyCollinsDemo;
-  src: url(../../public/fonts/jimmy-collins-font/JimmyCollinsDemoVersion-gx0LY.ttf);
+  src: url(../../fonts/jimmy-collins-font/JimmyCollinsDemoVersion-gx0LY.ttf);
+}
+@font-face {
+  font-family: DocallismeOnStreet;
+  src: url(../../public/fonts/docallisme-on-street-font/DocallismeOnStreet-ZVO1Z.otf);
 }

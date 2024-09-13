@@ -10,4 +10,6 @@ export interface Artwork {
   longitude: number
   artist?: string
   imageUrl: string
+  userId: string
+  description: string
 }
