@@ -13,3 +13,14 @@ export interface Artwork {
   userId: string
   description: string
 }
+
+export interface Game {
+  id: number,
+  timestamp: number,
+  artworkId: number,
+  userName: string | undefined,
+  artWasFound: boolean,
+  guessesUsed: number,
+  rating?: number,
+}
+
