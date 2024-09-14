@@ -1,5 +1,5 @@
 import connection from './connection'
-import { Artwork } from 'models/models'
+import { Artwork, ArtworkPaginate } from 'models/models'
 
 const db = connection
 
@@ -15,26 +15,6 @@ export async function getArtworkById(id: number) {
       'image_url as imageUrl',
     )
     .first()
-}
-
-export function getArtworks(page: number): Promise<Artwork[]> {
-  //getAllArtwork
-  return db('artworks')
-    .select(
-      'id',
-      'location',
-      'latitude',
-      'longitude',
-      'artist',
-      'image_url as imageUrl',
-      'user_id as userId',
-      'description',
-    )
-    .limit(5 * page)
-}
-
-export function getArtworksLength() {
-  return db('artworks').select().count({ count: '*' })
 }
 
 export async function getAllArtwork(): Promise<Artwork[]> {
@@ -63,9 +43,22 @@ export async function getRandomArtwork(): Promise<Artwork> {
     .first()
 }
 
-export function getPaginateArtworks(page: number) {
-  return db('artworks').paginate({
-    perPage: 10,
-    currentPage: page,
-  })
+export async function getPaginateArtworks(
+  page: number,
+): Promise<ArtworkPaginate> {
+  return await db('artworks')
+    .select(
+      'id',
+      'location',
+      'latitude',
+      'longitude',
+      'image_url as imageUrl',
+      'artist',
+      'description',
+      'user_id as userId',
+    )
+    .paginate({
+      perPage: 10,
+      currentPage: page,
+    })
 }
