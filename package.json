@@ -42,6 +42,7 @@
     "jwks-rsa": "^2.1.5",
     "kill-port": "^2.0.1",
     "knex": "^2.5.1",
+    "knex-paginate": "^3.1.4",
     "lucide-react": "^0.439.0",
     "react-infinite-scroll-component": "^6.1.0",
     "sqlite3": "^5.1.7",

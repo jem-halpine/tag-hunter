@@ -62,3 +62,10 @@ export async function getRandomArtwork(): Promise<Artwork> {
     )
     .first()
 }
+
+export function getPaginateArtworks(page: number) {
+  return db('artworks').paginate({
+    perPage: 10,
+    currentPage: page,
+  })
+}

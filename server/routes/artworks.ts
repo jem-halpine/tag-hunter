@@ -33,4 +33,14 @@ router.get('/', async (req, res) => {
   }
 })
 
+router.get('/paginated-results/:page', async (req, res) => {
+  try {
+    const page = Number(req.params.page)
+    const artworks = await db.getPaginateArtworks(page)
+    res.json(artworks)
+  } catch (error) {
+    res.sendStatus(500)
+  }
+})
+
 export default router
