@@ -18,11 +18,12 @@ export default function GamePage() {
   const welcome =
     'Use the mouse to drag the pin around the map then hit submit to see if you have found it!'
 
-  const [showMarker, setShowMarker] = useState(false)
+  const [showMarker, setShowMarker] = useState(true)
   const [guessCount, setGuessCount] = useState(5)
   const [userLocation, setUserLocation] = useState<LatLng | null>(wellington)
   const [gameMessage, setGameMessage] = useState<string>(welcome)
   const [hasFound, setHasFound] = useState(false)
+  // const [gameOver, setGameOver] = useState(false)
 
   const queryClient = useQueryClient()
   const streetViewRef = useRef<HTMLDivElement | null>(null)
@@ -69,6 +70,10 @@ export default function GamePage() {
 
   return (
     <>
+      <div id="debug-console">
+        <p>Game status: {hasFound ? 'Found' : 'Not found'}</p>
+        <p>Guess count: {guessCount}</p>
+      </div>
       <div
         id="container"
         className="m-10 flex flex-wrap justify-center bg-blue-400"
@@ -79,23 +84,21 @@ export default function GamePage() {
         >
           <div
             id="art-container"
-            className="flex flex-col items-center bg-orange-500 p-10 w-full h-[500px]"
+            className=" flex h-[500px] w-full flex-col items-center bg-orange-500 p-10"
           >
-              <img
-                className="rounded-md shadow-md h-full w-full max-w-[540px] object-cover"
-                src={`images/${artwork.imageUrl}`}
-                alt=""
-              />
-            </div>
+            <img
+              className="h-full w-full max-w-[540px] rounded-md object-cover shadow-md"
+              src={`images/${artwork.imageUrl}`}
+              alt=""
+            />
+          </div>
 
-          {/* <IsAuthenticated>
-            <div
-              id="streetview"
-              className="my-10 min-h-[200px] min-w-[200px]"
-            >
+          <IsAuthenticated>
+            <div className="flex h-[350px] w-full max-w-[540px] flex-col items-center bg-yellow-400 px-10 pb-10">
               <div
+                id="streetview"
                 ref={streetViewRef}
-                className="size-full rounded-xl border-2 border-gray-300 p-10"
+                className="h-full w-full rounded-full"
               />
             </div>
           </IsAuthenticated>
@@ -103,10 +106,13 @@ export default function GamePage() {
             <div className="p-10">
               Log in or Sign up to unlock the Streetview portal!
             </div>
-          </NotAuthenticated> */}
+          </NotAuthenticated>
         </div>
 
-        <div id="game-interface" className="flex w-1/2 min-w-[540px] flex-col items-center">
+        <div
+          id="game-interface"
+          className="flex w-1/2 min-w-[540px] flex-col items-center"
+        >
           <div id="game-message" className="">
             {guessCount > 0 && <p>{gameMessage}</p>}
 
@@ -152,10 +158,13 @@ export default function GamePage() {
               </div>
             </div>
           )}
-          <div id="map-container" className="w-full flex flex-col items-center bg-red-700 p-10">
+          <div
+            id="map-container"
+            className="flex w-full flex-col items-center bg-red-700 p-10"
+          >
             <div
               id="map"
-              className="h-[50vh] w-10/12 border-2 border-thGray drop-shadow-lg"
+              className="h-[50vh] w-full border-2 border-thGray drop-shadow-lg"
             >
               <APIProvider apiKey={'AIzaSyAniaK3l1jH7gSgpiNd-PyBMB0ygsy8QXA'}>
                 <Map
