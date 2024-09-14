@@ -14,8 +14,6 @@ import { IsAuthenticated } from '@/components/IsAuthenticated'
 import { NotAuthenticated } from '@/components/NotAuthenticated'
 
 export default function GamePage() {
-  // TODO: randomly pick artwork on page load
-  // const artworkID = 1
   const wellington = { lat: -41.29244, lng: 174.77876 }
   const welcome =
     'Use the mouse to drag the pin around the map then hit submit to see if you have found it!'
@@ -71,30 +69,29 @@ export default function GamePage() {
 
   return (
     <>
-      <div id="container" className="flex flex-wrap justify-center py-10">
-        <div id="game-display" className="flex flex-col items-center">
-          <div id="art-container" className="flex flex-col items-center">
-            <div id="game-message" className="h-[15vh] py-10">
-              {guessCount > 0 && <p>{gameMessage}</p>}
-
-              {guessCount < 1 && (
-                <div>
-                  Not this time... Get out on the street and get hunting!
-                </div>
-              )}
-            </div>
-            <div id="art-image" className="flex flex-col items-center">
+      <div
+        id="container"
+        className="m-10 flex flex-wrap justify-center bg-blue-400"
+      >
+        <div
+          id="game-display"
+          className="flex w-1/2 min-w-[540px] flex-col items-center bg-green-500"
+        >
+          <div
+            id="art-container"
+            className="flex flex-col items-center bg-orange-500 p-10 w-full h-[500px]"
+          >
               <img
-                className="w-3/4 rounded-md shadow-md"
+                className="rounded-md shadow-md h-full w-full max-w-[540px] object-cover"
                 src={`images/${artwork.imageUrl}`}
                 alt=""
               />
             </div>
-          </div>
-          <IsAuthenticated>
+
+          {/* <IsAuthenticated>
             <div
               id="streetview"
-              className="my-10 h-[200px] w-1/2 min-w-[200px]"
+              className="my-10 min-h-[200px] min-w-[200px]"
             >
               <div
                 ref={streetViewRef}
@@ -106,12 +103,17 @@ export default function GamePage() {
             <div className="p-10">
               Log in or Sign up to unlock the Streetview portal!
             </div>
-          </NotAuthenticated>
+          </NotAuthenticated> */}
         </div>
-        <div
-          id="game-interface"
-          className="flex w-1/2 min-w-[700px] flex-col items-center"
-        >
+
+        <div id="game-interface" className="flex w-1/2 min-w-[540px] flex-col items-center">
+          <div id="game-message" className="">
+            {guessCount > 0 && <p>{gameMessage}</p>}
+
+            {guessCount < 1 && (
+              <div>Not this time... Get out on the street and get hunting!</div>
+            )}
+          </div>
           {hasFound ||
             (guessCount < 1 && (
               <div className="p-10">
@@ -150,10 +152,10 @@ export default function GamePage() {
               </div>
             </div>
           )}
-          <div id="map-container" className="h- w-full ">
+          <div id="map-container" className="w-full flex flex-col items-center bg-red-700 p-10">
             <div
               id="map"
-              className="mx-10 h-[600px] w-full border-2 border-thGray drop-shadow-lg"
+              className="h-[50vh] w-10/12 border-2 border-thGray drop-shadow-lg"
             >
               <APIProvider apiKey={'AIzaSyAniaK3l1jH7gSgpiNd-PyBMB0ygsy8QXA'}>
                 <Map
