@@ -12,10 +12,9 @@ import * as game from '../game'
 import SprayCan from '@/icons/SprayCan'
 import { IsAuthenticated } from '@/components/IsAuthenticated'
 import { NotAuthenticated } from '@/components/NotAuthenticated'
+import { addGame } from '@/apis/games'
 
 export default function GamePage() {
-  // TODO: randomly pick artwork on page load
-  // const artworkID = 1
   const wellington = { lat: -41.29244, lng: 174.77876 }
   const welcome =
     'Use the mouse to drag the pin around the map then hit submit to see if you have found it!'
@@ -56,7 +55,6 @@ export default function GamePage() {
           enableCloseButton: false,
         },
       )
-
       panorama.setPosition(userLocation)
     }
   }, [userLocation])
@@ -213,11 +211,18 @@ export default function GamePage() {
         setHasFound(true)
         setShowMarker(true)
         setGameMessage(`You found it! (${dist.toFixed(1)}m away)`)
+        // Send game result to database
+        saveGame()
         return
       }
 
       setGameMessage(game.failureMessage(dist))
       setGuessCount(guessCount - 1)
+
+      if (guessCount === 0) {
+        // send game result to database
+        saveGame()
+      }
     }
   }
 
@@ -229,6 +234,19 @@ export default function GamePage() {
       setUserLocation(wellington)
       setGameMessage(welcome)
       setHasFound(false)
+    }
+  }
+
+  function saveGame() {
+    if (artwork && (hasFound || guessCount < 1)) {
+      const guessesUsed = 5 - guessCount
+
+      addGame({
+        auth0Id: 'test',
+        artworkId: artwork.id,
+        artWasFound: hasFound,
+        guessesUsed,
+      })
     }
   }
 }
