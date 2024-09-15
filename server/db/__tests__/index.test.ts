@@ -50,5 +50,30 @@ describe('getArtworkById(id)', () => {
 })
 
 //getRandomArtwork()
+describe('getRandomArtwork()', () => {
+  it('gets an artwork from the database at random', async () => {
+    const randomArtwork = await db.getRandomArtwork()
+    const allArtworks = await db.getAllArtwork()
 
-//getPaginateArtworks()
+    expect(randomArtwork).toBeDefined()
+    expect(randomArtwork).toHaveProperty('id')
+    expect(randomArtwork).toHaveProperty('location')
+    expect(randomArtwork).toHaveProperty('latitude')
+    expect(randomArtwork).toHaveProperty('longitude')
+    expect(randomArtwork).toHaveProperty('imageUrl')
+    expect(randomArtwork).toHaveProperty('artist')
+
+    expect(allArtworks).toContainEqual(randomArtwork)
+  })
+})
+
+//TODO: getPaginateArtworks()
+describe('getPaginateArtworks()', () => {
+  it.skip('returns paginated artwork data based on the page number', async () => {
+    const page = 1
+    const { data, pagination } = await db.getPaginateArtworks(page)
+
+    expect(Array.isArray(data)).toBe(true)
+    expect(data.length).toBeLessThanOrEqual(10)
+  })
+})
