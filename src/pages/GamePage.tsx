@@ -14,7 +14,7 @@ import { IsAuthenticated } from '@/components/IsAuthenticated'
 import { NotAuthenticated } from '@/components/NotAuthenticated'
 import { addGame } from '@/apis/games'
 import { useAuth0 } from '@auth0/auth0-react'
-import { useSearchParams } from 'react-router-dom'
+import { Link, useSearchParams } from 'react-router-dom'
 
 export default function GamePage() {
   const wellington = { lat: -41.29244, lng: 174.77876 }
@@ -124,10 +124,11 @@ export default function GamePage() {
               </div>
 
               {gameOver && (
-                <div className="p-5">
+                <div className="p-5 flex gap-5">
                   <Button className="px-10 text-lg" onClick={playAgain}>
                     Play again!
                   </Button>
+                  <Link to="/play/leaderboard"><Button className="px-10 text-lg">Leaderboard</Button></Link>
                 </div>
               )}
 
@@ -260,14 +261,7 @@ export default function GamePage() {
       setGuessCount(guessCount - 1)
       const guesses = guessCount - 1
       const guessesUsed = 5 - guesses
-      const gameResult = {
-        auth0Id: user?.sub,
-        artworkId: artwork.id,
-        artWasFound: false,
-        guessesUsed
-      }
-      
-
+    
       const dist = game.calculateDistance(
         { lat: artwork.latitude, lng: artwork.longitude },
         userLocation,
@@ -277,7 +271,12 @@ export default function GamePage() {
         setShowMarker(true)
         setGameMessage(`You found it! (${dist.toFixed(1)}m away)`)
         setGameOver(true)
-        saveGameMutation.mutate(gameResult)
+        saveGameMutation.mutate({
+          auth0Id: user?.sub,
+          artworkId: artwork.id,
+          artWasFound: true,
+          guessesUsed
+        })
         return
 
       } else if (guesses > 0) {
@@ -287,7 +286,12 @@ export default function GamePage() {
       } else {
         setGameMessage('Game Over')
         setGameOver(true)
-        saveGameMutation.mutate(gameResult)
+        saveGameMutation.mutate({
+          auth0Id: user?.sub,
+          artworkId: artwork.id,
+          artWasFound: false,
+          guessesUsed
+        })
       }      
     }
   }

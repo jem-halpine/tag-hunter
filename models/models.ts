@@ -43,3 +43,10 @@ export interface Paginate {
   from: number
   to: number
 }
+
+export interface LeaderboardRow {
+  name: string
+  games: number
+  wins: number
+  guesses: number
+}
