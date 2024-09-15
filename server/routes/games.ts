@@ -13,6 +13,15 @@ router.get('/', async (req, res) => {
   }
 })
 
+router.get('/leaderboard', async (req, res) => {
+  
+  try {
+    const games = await db.getLeaderBoard()
+    res.json(games)
+  } catch (error) {
+    res.status(500)
+  }
+})
 
 router.post('/', async (req, res) => {
 

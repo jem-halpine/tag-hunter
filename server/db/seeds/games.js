@@ -76,5 +76,23 @@ export async function seed(knex) {
       guesses_used: 1,
       rating: 5,
     },
+    {
+      id: 8,
+      timestamp: dateShift(54),
+      artwork_id: 4,
+      user_id: 'Auth00000',
+      art_was_found: false,
+      guesses_used: 5,
+      rating: 5,
+    },
+    {
+      id: 9,
+      timestamp: dateShift(58),
+      artwork_id: 11,
+      user_id: 'Auth00000',
+      art_was_found: true,
+      guesses_used: 4,
+      rating: 5,
+    },
   ])
 }

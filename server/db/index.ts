@@ -52,11 +52,21 @@ export async function getGames(): Promise<Game[]> {
       "games.timestamp",
       "games.artwork_id as artworkId",
       "users.name as username",
-      "users.auth0Id",
       "games.art_was_found as artWasFound",
       "games.guesses_used as guessesUsed",
-      "games.rating",
+      // "games.rating",
     )  
+}
+
+export async function getLeaderBoard(): Promise<Game[]> {
+  return await db('games')
+    .join('users','users.auth0Id','=','games.user_id')
+    .select('users.name')
+    .count('games.id as games')
+    .sum('games.art_was_found as wins')
+    .sum('guesses_used as guesses')
+    .groupBy('users.name')
+
 }
 
 
