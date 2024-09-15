@@ -257,6 +257,13 @@ export default function GamePage() {
       setGuessCount(guessCount - 1)
       const guesses = guessCount - 1
       const guessesUsed = 5 - guesses
+      const gameResult = {
+        auth0Id: user?.sub,
+        artworkId: artwork.id,
+        artWasFound: false,
+        guessesUsed
+      }
+      
 
       const dist = game.calculateDistance(
         { lat: artwork.latitude, lng: artwork.longitude },
@@ -267,26 +274,17 @@ export default function GamePage() {
         setShowMarker(true)
         setGameMessage(`You found it! (${dist.toFixed(1)}m away)`)
         setGameOver(true)
-        saveGameMutation.mutate({
-          auth0Id: "Auth0999",
-          artworkId: artwork.id,
-          artWasFound: true,
-          guessesUsed
-        })
+        saveGameMutation.mutate(gameResult)
         return
+
       } else if (guesses > 0) {
         setGameMessage(game.failureMessage(dist))
         return
+        
       } else {
         setGameMessage('Game Over')
         setGameOver(true)
-
-        saveGameMutation.mutate({
-          auth0Id: user?.sub,
-          artworkId: artwork.id,
-          artWasFound: false,
-          guessesUsed
-        })
+        saveGameMutation.mutate(gameResult)
       }      
     }
   }
