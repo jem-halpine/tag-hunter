@@ -7,6 +7,7 @@ import knexConfig from './db/knexfile.js'
 import artworkRoutes from './routes/artworks.ts'
 import playRoutes from './routes/play.ts'
 import usersRoutes from './routes/usersRoutes.ts'
+import gameRoutes from './routes/games.ts'
 
 type Environments = 'development' | 'test' | 'production'
 
@@ -21,6 +22,7 @@ server.use(express.json())
 server.use('/api/v1/artworks', artworkRoutes)
 server.use('/api/v1/play', playRoutes)
 server.use('/api/v1/users', usersRoutes)
+server.use('/api/v1/games', gameRoutes)
 
 if (process.env.NODE_ENV === 'production') {
   server.use(express.static(Path.resolve('public')))

@@ -6,6 +6,7 @@ import Profile from './pages/Profile'
 import Gallery from './pages/GalleryPage'
 import Register from './components/Register'
 import ViewArt from './pages/ViewArt'
+import Leaderboard from './pages/Leaderboard'
 
 export default createRoutesFromElements(
   <Route path="/" element={<Layout />}>
@@ -15,5 +16,6 @@ export default createRoutesFromElements(
     <Route path="/gallery" element={<Gallery />} />
     <Route path="/register" element={<Register />} />
     <Route path="/gallery/:id" element={<ViewArt />} />
+    <Route path="/play/leaderboard" element={<Leaderboard />} />
   </Route>,
 )

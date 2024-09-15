@@ -59,6 +59,11 @@ export default function Home() {
               Gallery
             </Button>
           </Link>
+          <Link to="/play/leaderboard">
+            <Button variant="default" size="lg">
+              Leaderboard
+            </Button>
+          </Link>
         </IsAuthenticated>
       </div>
     </div>
