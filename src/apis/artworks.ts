@@ -1,4 +1,4 @@
-import { Artwork } from 'models/models'
+import { Artwork, ArtworkPaginate } from 'models/models'
 import request from 'superagent'
 
 export async function getArtworkById(id: number): Promise<Artwork> {
@@ -6,17 +6,17 @@ export async function getArtworkById(id: number): Promise<Artwork> {
   return res.body
 }
 
-export async function getAllArtwork(pageNumber: number): Promise<Artwork[]> {
-  const res = await request.get(`/api/v1/artworks`).query({ page: pageNumber })
-  return res.body
-}
-
-export async function getArtworksLength(): Promise<number> {
-  const res = await request.get(`/api/v1/artworks/length`)
-  return res.body
-}
-
 export async function getRandomArtwork(): Promise<Artwork> {
   const res = await request.get(`/api/v1/play`)
   return res.body
+}
+
+export async function getPaginateGallery(
+  pageParam: number,
+): Promise<ArtworkPaginate> {
+  const res = await fetch(`/api/v1/artworks/paginated-results/${pageParam}`)
+  if (!res.ok) {
+    throw new Error('Network response was not ok')
+  }
+  return res.json()
 }

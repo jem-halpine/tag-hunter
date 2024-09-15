@@ -1,11 +1,20 @@
 import express from 'express'
 import * as Path from 'node:path'
+import knex from 'knex'
+import { attachPaginate } from 'knex-paginate'
+import knexConfig from './db/knexfile.js'
 
 import artworkRoutes from './routes/artworks.ts'
 import playRoutes from './routes/play.ts'
 import usersRoutes from './routes/usersRoutes.ts'
 
+type Environments = 'development' | 'test' | 'production'
+
 const server = express()
+
+const environment = (process.env.NODE_ENV || 'development') as Environments
+export const db = knex(knexConfig[environment])
+attachPaginate()
 
 server.use(express.json())
 

@@ -3,6 +3,11 @@ export interface LatLng {
   lng: number
 }
 
+export interface ArtworkPaginate {
+  data: Artwork[]
+  pagination: Partial<Paginate>
+}
+
 export interface Artwork {
   id: number
   location: string
@@ -12,4 +17,15 @@ export interface Artwork {
   imageUrl: string
   userId: string
   description: string
+}
+
+export interface Paginate {
+  total: number
+  lastPage: number
+  prevPage: null | number
+  nextPage: number
+  perPage: number
+  currentPage: number
+  from: number
+  to: number
 }
