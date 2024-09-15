@@ -1,4 +1,4 @@
-import { useQuery, useQueryClient } from '@tanstack/react-query'
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 import { getRandomArtwork } from '../apis/artworks'
 import { Button } from '@/components/ui/button'
 import {
@@ -8,17 +8,23 @@ import {
   Pin,
 } from '@vis.gl/react-google-maps'
 import { useEffect, useRef, useState } from 'react'
-import { LatLng } from 'models/models'
+import { GameData, LatLng } from 'models/models'
 import * as game from '../game'
 import { IsAuthenticated } from '@/components/IsAuthenticated'
 import { NotAuthenticated } from '@/components/NotAuthenticated'
+import { addGame } from '@/apis/games'
+import { useAuth0 } from '@auth0/auth0-react'
+import { Link, useSearchParams } from 'react-router-dom'
 
 export default function GamePage() {
   const wellington = { lat: -41.29244, lng: 174.77876 }
   const welcome =
     'Use the mouse to drag the pin around the map then hit submit to see if you have found it!'
 
-  const [showMarker, setShowMarker] = useState(false)
+  // Add "?code=taghunter" to the page URL to show artwork location on map.
+  const [searchParams] = useSearchParams()
+  const [showMarker, setShowMarker] = useState(searchParams.get('code') === 'taghunter' ? true : false)
+  
   const [guessCount, setGuessCount] = useState(5)
   const [userLocation, setUserLocation] = useState<LatLng | null>(wellington)
   const [gameMessage, setGameMessage] = useState<string>(welcome)
@@ -26,6 +32,7 @@ export default function GamePage() {
 
   const queryClient = useQueryClient()
   const streetViewRef = useRef<HTMLDivElement | null>(null)
+  const { user } = useAuth0()
 
   const {
     data: artwork,
@@ -59,6 +66,11 @@ export default function GamePage() {
     }
   }, [userLocation])
 
+  const saveGameMutation = useMutation({
+    mutationFn: async (game: GameData) => addGame(game),
+    onSuccess: () => {}
+  })
+
   if (isPending) {
     return <>Loading</>
   }
@@ -66,6 +78,8 @@ export default function GamePage() {
   if (isError) {
     return <>Error</>
   }
+
+
 
   return (
     <>
@@ -110,10 +124,11 @@ export default function GamePage() {
               </div>
 
               {gameOver && (
-                <div className="p-5">
+                <div className="p-5 flex gap-5">
                   <Button className="px-10 text-lg" onClick={playAgain}>
                     Play again!
                   </Button>
+                  <Link to="/play/leaderboard"><Button className="px-10 text-lg">Leaderboard</Button></Link>
                 </div>
               )}
 
@@ -245,7 +260,8 @@ export default function GamePage() {
     if (userLocation && artwork) {
       setGuessCount(guessCount - 1)
       const guesses = guessCount - 1
-
+      const guessesUsed = 5 - guesses
+    
       const dist = game.calculateDistance(
         { lat: artwork.latitude, lng: artwork.longitude },
         userLocation,
@@ -255,14 +271,28 @@ export default function GamePage() {
         setShowMarker(true)
         setGameMessage(`You found it! (${dist.toFixed(1)}m away)`)
         setGameOver(true)
+        saveGameMutation.mutate({
+          auth0Id: user?.sub,
+          artworkId: artwork.id,
+          artWasFound: true,
+          guessesUsed
+        })
         return
+
       } else if (guesses > 0) {
         setGameMessage(game.failureMessage(dist))
         return
+
       } else {
         setGameMessage('Game Over')
         setGameOver(true)
-      }
+        saveGameMutation.mutate({
+          auth0Id: user?.sub,
+          artworkId: artwork.id,
+          artWasFound: false,
+          guessesUsed
+        })
+      }      
     }
   }
 }

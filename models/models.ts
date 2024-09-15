@@ -19,6 +19,20 @@ export interface Artwork {
   description: string
 }
 
+export interface GameData {
+  auth0Id?: string
+  artworkId: number
+  artWasFound: boolean
+  guessesUsed: number
+  rating?: number
+}
+
+export interface Game extends GameData {
+  id: number
+  timestamp: number
+  userName: string | undefined
+}
+
 export interface Paginate {
   total: number
   lastPage: number
@@ -28,4 +42,11 @@ export interface Paginate {
   currentPage: number
   from: number
   to: number
+}
+
+export interface LeaderboardRow {
+  name: string
+  games: number
+  wins: number
+  guesses: number
 }
