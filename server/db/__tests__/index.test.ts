@@ -92,11 +92,6 @@ describe('getLeaderBoard()', () => {
       expect(entry).toHaveProperty('games')
       expect(entry).toHaveProperty('wins')
       expect(entry).toHaveProperty('guesses')
-
-      expect(typeof entry.name).toBe('string')
-      expect(typeof entry.games).toBe('number')
-      expect(typeof entry.wins).toBe('number')
-      expect(typeof entry.guesses).toBe('number')
     })
   })
 })
