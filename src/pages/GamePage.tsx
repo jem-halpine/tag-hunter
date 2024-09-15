@@ -13,6 +13,7 @@ import * as game from '../game'
 import { IsAuthenticated } from '@/components/IsAuthenticated'
 import { NotAuthenticated } from '@/components/NotAuthenticated'
 import { addGame } from '@/apis/games'
+import { useAuth0 } from '@auth0/auth0-react'
 
 export default function GamePage() {
   const wellington = { lat: -41.29244, lng: 174.77876 }
@@ -27,6 +28,7 @@ export default function GamePage() {
 
   const queryClient = useQueryClient()
   const streetViewRef = useRef<HTMLDivElement | null>(null)
+  const { user } = useAuth0()
 
   const {
     data: artwork,
@@ -73,8 +75,11 @@ export default function GamePage() {
     return <>Error</>
   }
 
+  console.log(user)
+
   return (
     <>
+    <p></p>
         <div id="container" className="flex flex-wrap justify-center max-w-[1440px] m-auto">
           <div id="game-display" className="w-1/2 min-w-[540px]">
             <div className="m-2 flex h-full flex-col items-center bg-white/80 shadow-md shadow-black/50">
@@ -275,13 +280,14 @@ export default function GamePage() {
       } else {
         setGameMessage('Game Over')
         setGameOver(true)
+
         saveGameMutation.mutate({
-          auth0Id: "Auth0999",
+          auth0Id: user?.sub,
           artworkId: artwork.id,
           artWasFound: false,
           guessesUsed
         })
-      }
+      }      
     }
   }
 }

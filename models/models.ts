@@ -20,7 +20,7 @@ export interface Artwork {
 }
 
 export interface GameData {
-  auth0Id: string
+  auth0Id?: string
   artworkId: number
   artWasFound: boolean
   guessesUsed: number
@@ -32,6 +32,7 @@ export interface Game extends GameData {
   timestamp: number
   userName: string | undefined
 }
+
 export interface Paginate {
   total: number
   lastPage: number
