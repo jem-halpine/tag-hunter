@@ -1,5 +1,6 @@
 import { useQuery, useQueryClient } from '@tanstack/react-query'
 import { getRandomArtwork } from '../apis/artworks'
+import { Button } from '@/components/ui/button'
 import {
   AdvancedMarker,
   APIProvider,
@@ -22,8 +23,7 @@ export default function GamePage() {
   const [guessCount, setGuessCount] = useState(5)
   const [userLocation, setUserLocation] = useState<LatLng | null>(wellington)
   const [gameMessage, setGameMessage] = useState<string>(welcome)
-  const [hasFound, setHasFound] = useState(false)
-  // const [gameOver, setGameOver] = useState(false)
+  const [gameOver, setGameOver] = useState(false)
 
   const queryClient = useQueryClient()
   const streetViewRef = useRef<HTMLDivElement | null>(null)
@@ -70,138 +70,156 @@ export default function GamePage() {
 
   return (
     <>
-      <div id="debug-console">
-        <p>Game status: {hasFound ? 'Found' : 'Not found'}</p>
-        <p>Guess count: {guessCount}</p>
-      </div>
-      <div
-        id="container"
-        className="m-10 flex flex-wrap justify-center bg-blue-400"
-      >
-        <div
-          id="game-display"
-          className="flex w-1/2 min-w-[540px] flex-col items-center bg-green-500"
-        >
-          <div
-            id="art-container"
-            className=" flex h-[500px] w-full flex-col items-center bg-orange-500 p-10"
-          >
-            <img
-              className="h-full w-full max-w-[540px] rounded-md object-cover shadow-md"
-              src={`images/${artwork.imageUrl}`}
-              alt=""
-            />
-          </div>
-
-          <IsAuthenticated>
-            <div className="flex h-[350px] w-full max-w-[540px] flex-col items-center bg-yellow-400 px-10 pb-10">
+        <div id="container" className="flex flex-wrap justify-center max-w-[1440px] m-auto">
+          <div id="game-display" className="w-1/2 min-w-[540px]">
+            <div className="m-2 flex h-full flex-col items-center bg-white/80 shadow-md shadow-black/50">
               <div
-                id="streetview"
-                ref={streetViewRef}
-                className="h-full w-full rounded-full"
-              />
-            </div>
-          </IsAuthenticated>
-          <NotAuthenticated>
-            <div className="p-10">
-              Log in or Sign up to unlock the Streetview portal!
-            </div>
-          </NotAuthenticated>
-        </div>
-
-        <div
-          id="game-interface"
-          className="flex w-1/2 min-w-[540px] flex-col items-center"
-        >
-          <div id="game-message" className="">
-            {guessCount > 0 && <p>{gameMessage}</p>}
-
-            {guessCount < 1 && (
-              <div>Not this time... Get out on the street and get hunting!</div>
-            )}
-          </div>
-          {hasFound ||
-            (guessCount < 1 && (
-              <div className="p-10">
-                <button onClick={playAgain}>Play again!</button>
-              </div>
-            ))}
-          {guessCount > 0 && !hasFound && (
-            <div id="submission" className="flex w-full max-w-[600px] px-10">
-              <button
-                onClick={handleSubmitGuess}
-                className="m-5 rounded-md bg-gradient-to-br from-thGold to-thUmber p-4 px-10 font-bold text-white shadow-md ring-thGray/50 hover:ring-2"
+                id="art-container"
+                className=" flex h-[500px] w-full flex-col items-center p-10 mt-auto"
               >
-                Submit
-              </button>
-              <div
-                id="mistakes-container"
-                className="flex w-2/3 justify-between p-10"
-              >
-                <>
-                  <div className={guessCount > 0 ? '' : 'invisible'}>
-                    <SprayCan />
-                  </div>
-                  <div className={guessCount > 1 ? '' : 'invisible'}>
-                    <SprayCan />
-                  </div>
-                  <div className={guessCount > 2 ? '' : 'invisible'}>
-                    <SprayCan />
-                  </div>
-                  <div className={guessCount > 3 ? '' : 'invisible'}>
-                    <SprayCan />
-                  </div>
-                  <div className={guessCount > 4 ? '' : 'invisible'}>
-                    <SprayCan />
-                  </div>
-                </>
+                <img
+                  className="h-full w-full max-w-[540px] rounded-md object-cover shadow-md shadow-black/50"
+                  src={`images/${artwork.imageUrl}`}
+                  alt=""
+                />
               </div>
-            </div>
-          )}
-          <div
-            id="map-container"
-            className="flex w-full flex-col items-center bg-red-700 p-10"
-          >
-            <div
-              id="map"
-              className="h-[50vh] w-full border-2 border-thGray drop-shadow-lg"
-            >
-              <APIProvider apiKey={'AIzaSyAniaK3l1jH7gSgpiNd-PyBMB0ygsy8QXA'}>
-                <Map
-                  defaultCenter={wellington}
-                  defaultZoom={13}
-                  mapId="gameMap"
-                  minZoom={14}
-                  fullscreenControl={null}
-                >
-                  <AdvancedMarker
-                    position={userLocation}
-                    draggable={true}
-                    onDrag={handleDragEnd}
+
+              <IsAuthenticated>
+                <div className="flex h-[350px] w-full max-w-[540px] flex-col items-center px-10 pb-10 mb-auto">
+                  <div
+                    id="streetview"
+                    ref={streetViewRef}
+                    className="h-full w-full rounded-3xl shadow-lg shadow-black/50"
                   />
-
-                  {showMarker && (
-                    <AdvancedMarker
-                      position={{
-                        lat: artwork.latitude,
-                        lng: artwork.longitude,
-                      }}
-                    >
-                      <Pin background={'gold'} borderColor={'black'} />
-                    </AdvancedMarker>
-                  )}
-                </Map>
-              </APIProvider>
+                </div>
+              </IsAuthenticated>
+              <NotAuthenticated>
+                <div className="p-10 font-title text-3xl mb-auto">
+                  Log in or Sign up to unlock the Streetview portal!
+                </div>
+              </NotAuthenticated>
             </div>
-            <div id="coordinates" className="flex flex-col items-center">
-              <div className="flex gap-5 p-2">
-                <div>{`Latitude: ${userLocation?.lat.toFixed(6)}`}</div>
-                <div>{`Longitude: ${userLocation?.lng.toFixed(6)}`}</div>
+          </div>
+
+          <div id="game-interface" className="w-1/2 min-w-[540px]">
+            <div className="m-2 flex h-full flex-col items-center bg-white/80 shadow-md shadow-black/50">
+              <div
+                id="game-message"
+                className="w-1/2 pt-10 text-center font-title text-3xl"
+              >
+                <p>{gameMessage}</p>
+              </div>
+
+              {gameOver && (
+                <div className="p-5">
+                  <Button className="px-10 text-lg" onClick={playAgain}>
+                    Play again!
+                  </Button>
+                </div>
+              )}
+
+              {!gameOver && (
+                <div
+                  id="submission"
+                  className="flex w-full max-w-[600px] px-10"
+                >
+                  <div className="p-10">
+                    <Button className="text-lg" onClick={handleSubmitGuess}>
+                      Submit
+                    </Button>
+                  </div>
+
+                  <div
+                    id="mistakes-container"
+                    className="flex w-3/4 justify-between p-10"
+                  >
+                    <>
+                      <div className={`${guessCount > 0 ? '' : 'invisible'} `}>
+                        <img
+                          src="images/favicon/spray-paint.png"
+                          alt=""
+                          className="size-12"
+                        />
+                      </div>
+                      <div className={guessCount > 1 ? '' : 'invisible'}>
+                        <img
+                          src="images/favicon/spray-paint.png"
+                          alt=""
+                          className="size-12"
+                        />
+                      </div>
+                      <div className={guessCount > 2 ? '' : 'invisible'}>
+                        <img
+                          src="images/favicon/spray-paint.png"
+                          alt=""
+                          className="size-12"
+                        />
+                      </div>
+                      <div className={guessCount > 3 ? '' : 'invisible'}>
+                        <img
+                          src="images/favicon/spray-paint.png"
+                          alt=""
+                          className="size-12"
+                        />
+                      </div>
+                      <div className={guessCount > 4 ? '' : 'invisible'}>
+                        <img
+                          src="images/favicon/spray-paint.png"
+                          alt=""
+                          className="size-12"
+                        />
+                      </div>
+                    </>
+                  </div>
+                </div>
+              )}
+              <div
+                id="map-container"
+                className="flex w-full flex-col items-center p-10"
+              >
+                <div
+                  id="map"
+                  className="h-[50vh] w-full border-2 border-thGray drop-shadow-lg"
+                >
+                  <APIProvider
+                    apiKey={'AIzaSyAniaK3l1jH7gSgpiNd-PyBMB0ygsy8QXA'}
+                  >
+                    <Map
+                      defaultCenter={wellington}
+                      defaultZoom={13}
+                      mapId="gameMap"
+                      minZoom={14}
+                      fullscreenControl={null}
+                    >
+                      <AdvancedMarker
+                        position={userLocation}
+                        draggable={true}
+                        onDrag={handleDragEnd}
+                      />
+
+                      {showMarker && (
+                        <AdvancedMarker
+                          position={{
+                            lat: artwork.latitude,
+                            lng: artwork.longitude,
+                          }}
+                        >
+                          <Pin background={'gold'} borderColor={'black'} />
+                        </AdvancedMarker>
+                      )}
+                    </Map>
+                  </APIProvider>
+                </div>
+                <div id="coordinates" className="flex flex-col items-center">
+                  <div className="flex gap-5 p-2">
+                    <div>{`Latitude: ${userLocation?.lat.toFixed(6)}`}</div>
+                    <div>{`Longitude: ${userLocation?.lng.toFixed(6)}`}</div>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
         </div>
-      </div>
     </>
   )
 
@@ -212,34 +230,40 @@ export default function GamePage() {
     }
   }
 
+  function playAgain() {
+    if (gameOver) {
+      queryClient.invalidateQueries()
+      setShowMarker(false)
+      setGuessCount(5)
+      setUserLocation(wellington)
+      setGameMessage(welcome)
+      setGameOver(false)
+    }
+  }
+
   function handleSubmitGuess() {
     // Calculate distance to artwork
     if (userLocation && artwork) {
+      setGuessCount(guessCount - 1)
+      const guesses = guessCount - 1
+
       const dist = game.calculateDistance(
         { lat: artwork.latitude, lng: artwork.longitude },
         userLocation,
       )
 
       if (game.hasFoundArt(dist)) {
-        setHasFound(true)
         setShowMarker(true)
         setGameMessage(`You found it! (${dist.toFixed(1)}m away)`)
+        setGameOver(true)
         return
+      } else if (guesses > 0) {
+        setGameMessage(game.failureMessage(dist))
+        return
+      } else {
+        setGameMessage('Game Over')
+        setGameOver(true)
       }
-
-      setGameMessage(game.failureMessage(dist))
-      setGuessCount(guessCount - 1)
-    }
-  }
-
-  function playAgain() {
-    if (hasFound || guessCount < 1) {
-      queryClient.invalidateQueries()
-      setShowMarker(false)
-      setGuessCount(5)
-      setUserLocation(wellington)
-      setGameMessage(welcome)
-      setHasFound(false)
     }
   }
 }
