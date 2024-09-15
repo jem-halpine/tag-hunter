@@ -10,7 +10,7 @@ router.get('/:id', async (req, res) => {
     const artwork = await db.getArtworkById(id)
     res.json(artwork)
   } catch (error) {
-    res.status(500)
+    res.sendStatus(500)
   }
 })
 
