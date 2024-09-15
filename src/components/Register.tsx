@@ -31,7 +31,7 @@ function Register() {
   return (
     <div>
       <IsAuthenticated>
-        <p>Boo</p>
+        <p>Logged in</p>
       </IsAuthenticated>
       <NotAuthenticated>
         <p>Please log in</p>
