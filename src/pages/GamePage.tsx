@@ -10,7 +10,6 @@ import {
 import { useEffect, useRef, useState } from 'react'
 import { LatLng } from 'models/models'
 import * as game from '../game'
-import SprayCan from '@/icons/SprayCan'
 import { IsAuthenticated } from '@/components/IsAuthenticated'
 import { NotAuthenticated } from '@/components/NotAuthenticated'
 
@@ -19,7 +18,7 @@ export default function GamePage() {
   const welcome =
     'Use the mouse to drag the pin around the map then hit submit to see if you have found it!'
 
-  const [showMarker, setShowMarker] = useState(true)
+  const [showMarker, setShowMarker] = useState(false)
   const [guessCount, setGuessCount] = useState(5)
   const [userLocation, setUserLocation] = useState<LatLng | null>(wellington)
   const [gameMessage, setGameMessage] = useState<string>(welcome)
@@ -105,7 +104,7 @@ export default function GamePage() {
             <div className="m-2 flex h-full flex-col items-center bg-white/80 shadow-md shadow-black/50">
               <div
                 id="game-message"
-                className="w-1/2 pt-10 text-center font-title text-3xl"
+                className="w-2/3 pt-10 text-center font-title text-3xl"
               >
                 <p>{gameMessage}</p>
               </div>
@@ -212,8 +211,8 @@ export default function GamePage() {
                 </div>
                 <div id="coordinates" className="flex flex-col items-center">
                   <div className="flex gap-5 p-2">
-                    <div>{`Latitude: ${userLocation?.lat.toFixed(6)}`}</div>
-                    <div>{`Longitude: ${userLocation?.lng.toFixed(6)}`}</div>
+                    <div className='font-title text-2xl'>{`Latitude: ${userLocation?.lat.toFixed(6)}`}</div>
+                    <div className='font-title text-2xl'>{`Longitude: ${userLocation?.lng.toFixed(6)}`}</div>
                   </div>
                 </div>
               </div>
