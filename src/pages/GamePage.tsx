@@ -14,13 +14,17 @@ import { IsAuthenticated } from '@/components/IsAuthenticated'
 import { NotAuthenticated } from '@/components/NotAuthenticated'
 import { addGame } from '@/apis/games'
 import { useAuth0 } from '@auth0/auth0-react'
+import { useSearchParams } from 'react-router-dom'
 
 export default function GamePage() {
   const wellington = { lat: -41.29244, lng: 174.77876 }
   const welcome =
     'Use the mouse to drag the pin around the map then hit submit to see if you have found it!'
 
-  const [showMarker, setShowMarker] = useState(false)
+  // Add "?code=taghunter" to the page URL to show artwork location on map.
+  const [searchParams] = useSearchParams()
+  const [showMarker, setShowMarker] = useState(searchParams.get('code') === 'taghunter' ? true : false)
+  
   const [guessCount, setGuessCount] = useState(5)
   const [userLocation, setUserLocation] = useState<LatLng | null>(wellington)
   const [gameMessage, setGameMessage] = useState<string>(welcome)
@@ -75,11 +79,10 @@ export default function GamePage() {
     return <>Error</>
   }
 
-  console.log(user)
+
 
   return (
     <>
-    <p></p>
         <div id="container" className="flex flex-wrap justify-center max-w-[1440px] m-auto">
           <div id="game-display" className="w-1/2 min-w-[540px]">
             <div className="m-2 flex h-full flex-col items-center bg-white/80 shadow-md shadow-black/50">
@@ -280,7 +283,7 @@ export default function GamePage() {
       } else if (guesses > 0) {
         setGameMessage(game.failureMessage(dist))
         return
-        
+
       } else {
         setGameMessage('Game Over')
         setGameOver(true)
