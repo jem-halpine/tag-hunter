@@ -15,6 +15,7 @@ import { NotAuthenticated } from '@/components/NotAuthenticated'
 import { addGame } from '@/apis/games'
 import { useAuth0 } from '@auth0/auth0-react'
 import { Link, useSearchParams } from 'react-router-dom'
+import GameOver from '@/components/GameOver' 
 
 export default function GamePage() {
   const wellington = { lat: -41.29244, lng: 174.77876 }
@@ -29,6 +30,7 @@ export default function GamePage() {
   const [userLocation, setUserLocation] = useState<LatLng | null>(wellington)
   const [gameMessage, setGameMessage] = useState<string>(welcome)
   const [gameOver, setGameOver] = useState(false)
+  const [success, setSuccess] = useState(false)
 
   const queryClient = useQueryClient()
   const streetViewRef = useRef<HTMLDivElement | null>(null)
@@ -83,6 +85,7 @@ export default function GamePage() {
 
   return (
     <>
+    <GameOver open={gameOver} onOpenChange={()=>setGameOver(false)} playAgain={playAgain} win={success}></GameOver>
         <div id="container" className="flex flex-wrap justify-center max-w-[1440px] m-auto">
           <div id="game-display" className="w-1/2 min-w-[540px]">
             <div className="m-2 flex h-full flex-col items-center bg-white/80 shadow-md shadow-black/50">
@@ -252,6 +255,7 @@ export default function GamePage() {
       setUserLocation(wellington)
       setGameMessage(welcome)
       setGameOver(false)
+      setSuccess(false)
     }
   }
 
@@ -270,6 +274,7 @@ export default function GamePage() {
       if (game.hasFoundArt(dist)) {
         setShowMarker(true)
         setGameMessage(`You found it! (${dist.toFixed(1)}m away)`)
+        setSuccess(true)
         setGameOver(true)
         saveGameMutation.mutate({
           auth0Id: user?.sub,
