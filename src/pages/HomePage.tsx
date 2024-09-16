@@ -10,7 +10,7 @@ export default function Home() {
           <img
             src="/images/homepage/spray-can.png"
             alt="spray can"
-            className="max-w-[18vw] rotate-12"
+            className="max-w-[18vw] translate-x-[10%] rotate-12 transform"
           />
         </div>
 
@@ -18,7 +18,7 @@ export default function Home() {
           <img
             src="/images/homepage/heart.png"
             alt="heart"
-            className="max-w-[16vw]  -translate-x-[20%] translate-y-[40%] transform"
+            className="max-w-[14vw] -translate-x-[5%] translate-y-[30%] -rotate-[18deg] transform"
           />
         </div>
 
@@ -34,7 +34,7 @@ export default function Home() {
           <img
             src="/images/homepage/fire-hydrant.png"
             alt="fire hydrant"
-            className="max-w-[16vw] translate-x-[10%] translate-y-[10%] rotate-6 transform"
+            className="max-w-[16vw] -translate-x-[10%] translate-y-[5%] rotate-6 transform"
           />
         </div>
 
@@ -42,7 +42,7 @@ export default function Home() {
           <img
             src="/images/homepage/mural.png"
             alt="mural"
-            className="max-w-[18vw]"
+            className="max-w-[18vw] -translate-x-[10%] transform"
           />
         </div>
 
@@ -50,7 +50,7 @@ export default function Home() {
           <img
             src="/images/homepage/graffiti.png"
             alt="spray can"
-            className="max-w-[16vw] translate-x-[10%] translate-y-[10%] transform"
+            className="max-w-[18vw]  translate-x-[15%] transform"
           />
         </div>
 
@@ -58,7 +58,7 @@ export default function Home() {
           <img
             src="/images/homepage/lightning-bolt.png"
             alt="lightning bolt"
-            className="max-w-[12vw] translate-x-[80%] translate-y-[40%] rotate-3 transform"
+            className="max-w-[16vw] translate-x-[40%] translate-y-[5%] rotate-3 transform"
           />
         </div>
 
@@ -66,7 +66,7 @@ export default function Home() {
           <img
             src="/images/homepage/mural-1.png"
             alt="mural"
-            className="max-w-[16vw] translate-x-[80%] translate-y-[15%] transform"
+            className="max-w-[16vw] translate-x-[70%] translate-y-[15%] transform"
           />
         </div>
 
@@ -74,7 +74,7 @@ export default function Home() {
           <img
             src="/images/homepage/spray-can-1.png"
             alt="spray can"
-            className="max-w-[22vw] -translate-y-[15%] translate-x-[60%] -rotate-12 transform"
+            className="max-w-[22vw] -translate-y-[15%] translate-x-[50%] -rotate-12 transform opacity-90"
           />
         </div>
       </div>
