@@ -14,17 +14,20 @@ export default function Gallery() {
 
   const artworks = data?.pages.flatMap((page) => page.data) || []
 
-  const breakpointColumnsObj = { //? Masonry column settings measured in pixels
-    default: 4, 
-    1100: 3, //? px: columnNumber
-    700: 2,
-    500: 1
+  const breakpointColumnsObj = {
+    //? Masonry column settings measured in pixels
+    default: 4,
+    2080: 3, //? px: columnNumber
+    1080: 2,
+    640: 1,
   }
 
   return (
-    <div className="ml-12 mr-12">
-      <Title title="Gallery" />
-      <InfiniteScroll //? Infinite Scroll settings
+    <div className="m-auto max-w-[1440px] p-10">
+      <div className='pb-10'>
+        <Title title="Gallery" />
+      </div>
+      <InfiniteScroll
         dataLength={artworks.length}
         next={fetchNextPage}
         hasMore={!!hasNextPage}
@@ -39,12 +42,11 @@ export default function Gallery() {
           breakpointCols={breakpointColumnsObj}
           className="my-masonry-grid"
           columnClassName="my-masonry-grid_column"
-        > 
+        >
           {artworks.map((item) => (
             <div key={item.id}>
-              {/* <Route path="/gallery/:id" element={<ViewArt />} /> */}
               <Link to={`/gallery/${item.id}`}>
-                <img src={`/images/compressed/${item.imageUrl}`} alt={item.description} />
+                <img src={`/images/${item.imageUrl}`} alt={item.description} className='shadow-md shadow-black/50'/>
               </Link>
             </div>
           ))}
