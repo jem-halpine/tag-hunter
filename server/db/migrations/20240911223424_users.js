@@ -6,7 +6,6 @@ export async function up(knex) {
     table.string('auth0Id').primary()
     table.string('name')
     table.decimal('email')
-    // table.decimal('seen_artwork_id')
   })
 }
 

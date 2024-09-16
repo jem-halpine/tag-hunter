@@ -40,7 +40,7 @@ export default function ViewArt() {
           alt=""
         />
         <div className="size-[30vw] max-h-[45vh] border-2 border-thGray shadow-md">
-          <APIProvider apiKey={'AIzaSyAniaK3l1jH7gSgpiNd-PyBMB0ygsy8QXA'}>
+          <APIProvider apiKey={import.meta.env.VITE_GOOGLE_MAPS_API_KEY}>
             <Map
               defaultCenter={artPos}
               defaultZoom={13}
