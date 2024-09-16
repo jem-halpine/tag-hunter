@@ -1,6 +1,11 @@
 import connection from './connection'
-import { Artwork, ArtworkPaginate, Game, GameData, UserData } from 'models/models'
-
+import {
+  Artwork,
+  ArtworkPaginate,
+  Game,
+  GameData,
+  UserData,
+} from 'models/models'
 
 const db = connection
 
@@ -46,51 +51,47 @@ export async function getRandomArtwork(): Promise<Artwork> {
 
 export async function getGames(): Promise<Game[]> {
   return await db('games')
-    .join('users','users.auth0Id','=','games.user_id')
+    .join('users', 'users.auth0Id', '=', 'games.user_id')
     .select(
-      "games.id",
-      "games.timestamp",
-      "games.artwork_id as artworkId",
-      "users.name as username",
-      "games.art_was_found as artWasFound",
-      "games.guesses_used as guessesUsed",
+      'games.id',
+      'games.timestamp',
+      'games.artwork_id as artworkId',
+      'users.name as username',
+      'games.art_was_found as artWasFound',
+      'games.guesses_used as guessesUsed',
       // "games.rating",
-    )  
+    )
 }
 
 export async function getLeaderBoard(): Promise<Game[]> {
   return await db('games')
-    .join('users','users.auth0Id','=','games.user_id')
+    .join('users', 'users.auth0Id', '=', 'games.user_id')
     .select('users.name')
     .count('games.id as games')
     .sum('games.art_was_found as wins')
     .sum('guesses_used as guesses')
     .groupBy('users.name')
-
 }
 
 export async function addGame(data: GameData) {
-  
-  const { 
+  const {
     auth0Id: user_id,
     artworkId: artwork_id,
     artWasFound: art_was_found,
     guessesUsed: guesses_used,
-    rating
+    rating,
   } = data
 
   const timestamp = new Date(Date.now())
-  
-  return await db('games').insert(
-    {
-      user_id,
-      artwork_id,
-      art_was_found,
-      guesses_used,
-      rating,
-      timestamp
-    }
-  )
+
+  return await db('games').insert({
+    user_id,
+    artwork_id,
+    art_was_found,
+    guesses_used,
+    rating,
+    timestamp,
+  })
 }
 
 export async function getPaginateArtworks(
@@ -110,6 +111,7 @@ export async function getPaginateArtworks(
     .paginate({
       perPage: 10,
       currentPage: page,
+      isLengthAware: true,
     })
 }
 
