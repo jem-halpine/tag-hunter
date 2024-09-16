@@ -10,6 +10,7 @@ import {
 import { Button } from '@/components/ui/button'
 import { Link } from 'react-router-dom'
 import Loading from '@/components/Loading'
+import Error from '@/components/Error'
 
 export default function ViewArt() {
   const { id: artworkID } = useParams()
@@ -28,7 +29,7 @@ export default function ViewArt() {
   }
 
   if (isError) {
-    return <>Error</>
+    return <Error />
   }
   console.log(artwork)
   const artPos = { lat: artwork.latitude, lng: artwork.longitude }
