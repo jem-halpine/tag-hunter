@@ -118,13 +118,5 @@ export async function getUserById(auth0id: string): Promise<UserData> {
 }
 
 export async function addUser(user: UserData) {
-
-  const existingUser = await db('users').where('auth0Id', user.auth0Id)
-
-  if(existingUser){
-    return undefined
-  } else {
-    return db('users').insert(user)
-  }
-
+  return db('users').insert(user)
 }
