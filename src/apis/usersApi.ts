@@ -1,6 +1,7 @@
 import request from 'superagent'
 import { AppUsers } from 'models/AppUsers'
-// import { User } from '@auth0/auth0-react'
+import { LeaderboardRow } from 'models/models'
+import { User } from '@auth0/auth0-react'
 
 const usersUrl = '/api/v1/users'
 
@@ -33,4 +34,9 @@ export async function addUser({
     .send(newUser)
     .then((res) => res.body.users)
     .catch(console.error)
+}
+
+export async function getUserLeaderboard(): Promise<LeaderboardRow> {
+  const result = await request.get(`/api/v1/profile`)
+  return result.body
 }

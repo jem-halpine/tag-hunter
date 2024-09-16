@@ -19,7 +19,7 @@ function Register() {
       else {
         const token = await getAccessTokenSilently()
         console.log('usertest', users)
-         users.add.mutate({
+        await users.add.mutate({
           newUser: { name: user?.name, email: user?.email, auth0id: user?.sub },
           token,
         })
