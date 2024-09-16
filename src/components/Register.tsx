@@ -17,7 +17,7 @@ function Register() {
       else {
         const token = await getAccessTokenSilently()
         users.add.mutate({
-          newUser: { name: "jeremy", email: user?.email, auth0id: "Jeremy" },
+          newUser: { name: "jeremy", email: user?.email, auth0id: user?.sub },
           token,
         })
         // navigate('/')

@@ -4,6 +4,7 @@ import { JwtRequest } from 'server/auth0'
 import checkJwt from 'server/auth0'
 
 import * as db from '../db/index'
+import { UserData } from 'models/models'
 
 const router = express.Router()
 
@@ -21,8 +22,9 @@ router.get('/', checkJwt, async (req: JwtRequest, res) => {
 
 //POST /api/v1/users
 router.post('/', checkJwt, async (req: JwtRequest, res) => {
+  const newUser: UserData = req.body
   try {
-    await db.addUser({auth0id: "J", name: "JW", email: "J@J" })
+    await db.addUser(newUser)
     res.sendStatus(201)
   } catch (error) {
     console.error(error)
