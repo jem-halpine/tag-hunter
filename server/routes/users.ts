@@ -1,10 +1,9 @@
 import express from 'express'
-// import { UserData } from 'models/models'
+import { UserData } from 'models/models'
 import { JwtRequest } from 'server/auth0'
 import checkJwt from 'server/auth0'
 
 import * as db from '../db/index'
-import { UserData } from 'models/models'
 
 const router = express.Router()
 
@@ -24,7 +23,7 @@ router.get('/', checkJwt, async (req: JwtRequest, res) => {
 // router.post('/', checkJwt, async (req: JwtRequest, res) => {
 router.post('/', async (req, res) => {
   
-  const newUser = req.body
+  const newUser: UserData = req.body
 
   try {
     await db.addUser(newUser)
@@ -37,23 +36,3 @@ router.post('/', async (req, res) => {
 
 export default router
 
-
-
-// //////////////////////////////////////////////////
-// //POST /api/v1/users
-// router.post('/', checkJwt, async (req: JwtRequest, res) => {
-//   try {
-//     const newUser = req.body
-//     const auth0id = req.auth?.sub
-//     const [users] = await db.addUser({
-//       ...newUser,
-//       auth0id,
-//     })
-//     res.json(users)
-//   } catch (error) {
-//     console.error(error)
-//     res.sendStatus(500)
-//   }
-// })
-
-// export default router

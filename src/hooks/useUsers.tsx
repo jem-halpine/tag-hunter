@@ -14,7 +14,7 @@ export function useUser() {
     queryKey: ['user'],
     queryFn: async () => {
       const token = await getAccessTokenSilently()
-      return API.getUserById({ token })
+      return API.getUserById(token)
     },
     enabled: !!user,
   })
@@ -38,6 +38,3 @@ export function useUserMutation<TData = unknown, TVaribles = unknown>(
   return mutation
 }
 
-// export function useAddUser() {
-//   return useUserMutation(API.addUser)
-// }

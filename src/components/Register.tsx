@@ -2,7 +2,6 @@ import { useUser } from "@/hooks/useUsers"
 import { useAuth0 } from "@auth0/auth0-react"
 import { useEffect } from "react"
 import { useNavigate } from "react-router-dom"
-import { Button } from "./ui/button"
 
 function Register() {
   
@@ -36,14 +35,14 @@ function Register() {
 
   }
 
-  if(!isAuthenticated && !userTable.data){
-    return <div>Not Authenticated</div>
+  if(!isAuthenticated){
+    return <div className="py-20 w-full text-center">Not Authenticated</div>
   }
 
 
   return (
-    <div>
-      Please wait while we log you in
+    <div  className="py-20 w-full text-center">
+      Please wait while we redirect you to our homepage...
     </div>
   )
 }
