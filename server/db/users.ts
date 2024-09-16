@@ -1,17 +1,17 @@
-import { Users } from 'models/users.ts'
+
+import { AppUsers } from 'models/AppUsers.ts'
 import db from './connection.ts'
-import { User } from '@auth0/auth0-react'
 import { Game } from 'models/models.ts'
 
-export async function getAllUsers(): Promise<Users[]> {
+export async function getAllUsers(): Promise<AppUsers[]> {
   return db('users').select('*')
 }
 
-export async function getUserById(auth0id: string): Promise<User> {
+export async function getUserById(auth0id: string): Promise<AppUsers> {
   return db('users').where({ auth0id }).select('*').first()
 }
 
-export async function addUser(user: User): Promise<User[]> {
+export async function addUser(user: AppUsers):Promise <AppUsers[]> {
   return db('users').insert(user)
 }
 

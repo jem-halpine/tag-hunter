@@ -1,6 +1,6 @@
 import request from 'superagent'
-import { Users } from 'models/users'
-import { User } from '@auth0/auth0-react'
+import { AppUsers } from 'models/AppUsers'
+// import { User } from '@auth0/auth0-react'
 
 const usersUrl = '/api/v1/users'
 
@@ -10,7 +10,7 @@ interface GetUsersFunction {
 
 export async function getUserById({
   token,
-}: GetUsersFunction): Promise<Users | null> {
+}: GetUsersFunction): Promise<AppUsers | null> {
   return await request
     .get(usersUrl)
     .set('Authorization', `Bearer ${token}`)
@@ -19,14 +19,14 @@ export async function getUserById({
 }
 
 interface AddUserFunction {
-  newUser: User
+  newUser: AppUsers
   token: string
 }
 
 export async function addUser({
   newUser,
   token,
-}: AddUserFunction): Promise<Users> {
+}: AddUserFunction): Promise<AppUsers> {
   return await request
     .post(usersUrl)
     .set('Authorization', `Bearer ${token}`)

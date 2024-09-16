@@ -11,13 +11,14 @@ import { useAuth0 } from '@auth0/auth0-react'
 export function useUser() {
   const { user, getAccessTokenSilently } = useAuth0()
   const query = useQuery({
-    queryKey: ['data'],
+    queryKey: ['user'],
     queryFn: async () => {
       const token = await getAccessTokenSilently()
       return API.getUserById({ token })
     },
     enabled: !!user,
   })
+  console.log('line20hook', user)
   return {
     ...query,
     add: useAddUser(),

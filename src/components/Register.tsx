@@ -3,7 +3,7 @@ import { useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { IsAuthenticated } from './IsAuthenticated'
 import { NotAuthenticated } from './NotAuthenticated'
-// import { Users } from 'models/users'
+import { AppUsers } from 'models/AppUsers' 
 import { useAuth0 } from '@auth0/auth0-react'
 
 function Register() {
@@ -11,13 +11,15 @@ function Register() {
 
   const navigate = useNavigate()
   const users = useUser()
+  // const testvar = false
 
   useEffect(() => {
     async function getUserData() {
       if (users.data) navigate('/')
       else {
         const token = await getAccessTokenSilently()
-        await users.add.mutate({
+        console.log('usertest', users)
+         users.add.mutate({
           newUser: { name: user?.name, email: user?.email, auth0id: user?.sub },
           token,
         })
@@ -26,8 +28,7 @@ function Register() {
     }
     getUserData()
   }, [users.data, navigate])
-  // console.log('Jemjemjem', users.data)
-
+console.log('line 31', user)
   return (
     <div>
       <IsAuthenticated>
