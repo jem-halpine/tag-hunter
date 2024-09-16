@@ -2,7 +2,7 @@ import InfiniteScroll from 'react-infinite-scroll-component'
 import { Title } from '@/components/Title'
 import { useInfiniteGallery } from '@/hooks/use-infinite-gallery'
 import Masonry from 'react-masonry-css'
-
+import { Link } from 'react-router-dom'
 export default function Gallery() {
   const { data, fetchNextPage, hasNextPage, status } = useInfiniteGallery()
 
@@ -36,10 +36,13 @@ export default function Gallery() {
           breakpointCols={breakpointColumnsObj}
           className="my-masonry-grid"
           columnClassName="my-masonry-grid_column"
-        >
+        > 
           {artworks.map((item) => (
             <div key={item.id}>
-              <img src={`/images/${item.imageUrl}`} alt={item.description} />
+              {/* <Route path="/gallery/:id" element={<ViewArt />} /> */}
+              <Link to={`/gallery/${item.id}`}>
+                <img src={`/images/${item.imageUrl}`} alt={item.description} />
+              </Link>
             </div>
           ))}
         </Masonry>
