@@ -17,6 +17,7 @@ import { useAuth0 } from '@auth0/auth0-react'
 import { Link, useSearchParams } from 'react-router-dom'
 import GameOver from '@/components/GameOver'
 import Loading from '@/components/Loading'
+import Error from '@/components/Error'
 
 export default function GamePage() {
   const wellington = { lat: -41.29244, lng: 174.77876 }
@@ -81,7 +82,7 @@ export default function GamePage() {
   }
 
   if (isError) {
-    return <>Error</>
+    return <Error />
   }
 
   return (

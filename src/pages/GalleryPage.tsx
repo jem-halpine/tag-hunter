@@ -4,13 +4,14 @@ import { useInfiniteGallery } from '@/hooks/use-infinite-gallery'
 import Masonry from 'react-masonry-css'
 import { Link } from 'react-router-dom'
 import Loading from '@/components/Loading'
+import Error from '@/components/Error'
 
 
 export default function Gallery() {
   const { data, fetchNextPage, hasNextPage, status } = useInfiniteGallery()
 
   if (status === 'pending') return <Loading />
-  if (status === 'error') return <div>Error loading gallery</div>
+  if (status === 'error') return <Error />
 
   const artworks = data?.pages.flatMap((page) => page.data) || []
 

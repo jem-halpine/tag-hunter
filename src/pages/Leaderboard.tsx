@@ -10,6 +10,7 @@ import {
   TableRow,
 } from '@/components/ui/table'
 import Loading from '@/components/Loading'
+import Error from '@/components/Error'
 
 export default function Leaderboard() {
   const {
@@ -26,7 +27,7 @@ export default function Leaderboard() {
   }
 
   if (isError) {
-    return <>Error</>
+    return <Error />
   }
 
   return (
