@@ -118,5 +118,5 @@ export async function getUserById(auth0id: string): Promise<UserData> {
 }
 
 export async function addUser(user: UserData) {
-  return db('users').insert(user)
+  return db('users').insert(user).onConflict('auth0id').ignore()
 }
