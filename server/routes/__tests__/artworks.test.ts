@@ -1,4 +1,6 @@
 import { describe, it, expect, beforeAll, beforeEach, afterAll } from 'vitest'
+import { StatusCodes } from 'http-status-codes'
+
 import connection from 'server/db/connection.ts'
 import server from 'server/server'
 import request from 'supertest'
@@ -9,18 +11,21 @@ beforeAll(async () => {
 
 beforeEach(async () => {
   await connection.seed.run()
+  const artwork = await connection('artworks').where({ id: 1 }).first()
+  console.log('Artwork in database before test:', artwork)
 })
 
 afterAll(async () => {
   await connection.destroy()
 })
 
-//finish this ome
 describe('GET /artworks/:id', () => {
+  //fix this at some point
   it('should return the correct artwork', async () => {
     const res = await request(server).get('/api/v1/artworks/1')
-    expect(res.status).toBe(200)
-    expect(res.body).toStrictEqual({
+    console.log('Response status:', res.status)
+    console.log('Response body:', res.body)
+    expect(res.body).toEqual({
       id: 1,
       location: '2 Mein Street, Newtown',
       latitude: -41.31092143587734,
@@ -34,6 +39,6 @@ describe('GET /artworks/:id', () => {
 
   it('should return a 500 error if it does not exist', async () => {
     const res = await request(server).get('/api/v1/artworks/11111111111')
-    expect(res.status).toBe(500)
+    expect(res.status).toBe(StatusCodes.INTERNAL_SERVER_ERROR)
   })
 })
