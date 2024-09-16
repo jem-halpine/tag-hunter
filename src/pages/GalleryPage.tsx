@@ -14,15 +14,17 @@ export default function Gallery() {
   const breakpointColumnsObj = {
     //? Masonry column settings measured in pixels
     default: 4,
-    1100: 3, //? px: columnNumber
-    700: 2,
-    500: 1,
+    2080: 3, //? px: columnNumber
+    1080: 2,
+    640: 1,
   }
 
   return (
-    <div className="ml-12 mr-12">
-      <Title title="Gallery" />
-      <InfiniteScroll //? Infinite Scroll settings
+    <div className="m-auto max-w-[1440px] p-10">
+      <div className="pb-10">
+        <Title title="Gallery" />
+      </div>
+      <InfiniteScroll
         dataLength={artworks.length}
         next={fetchNextPage}
         hasMore={!!hasNextPage}
@@ -40,7 +42,6 @@ export default function Gallery() {
         >
           {artworks.map((item) => (
             <div key={item.id}>
-              {/* <Route path="/gallery/:id" element={<ViewArt />} /> */}
               <Link to={`/gallery/${item.id}`}>
                 <img
                   src={`/images/compressed/${item.imageUrl}`}
