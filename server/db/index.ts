@@ -122,10 +122,9 @@ export async function addUser(user: UserData) {
   return db('users').insert(user).onConflict('auth0id').ignore()
 }
 
-export async function getLeaderBoardByUser(user_id: string): Promise<Game[]> {
+export async function getUserProfile(user_id: string) {
   return await db('users')
     .leftJoin('games', 'users.auth0Id', '=', 'games.user_id')
-    // .where({ user_id })
     .where('users.auth0id', user_id)
     .select('users.name', 'users.email')
     .count('games.id as games')

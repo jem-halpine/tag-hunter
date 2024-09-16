@@ -24,3 +24,8 @@ export async function addUser({
     .set('Authorization', `Bearer ${token}`)
     .send(newUser)
 }
+
+export async function getUserProfile(token:string){
+  const result = await request.get(`${usersUrl}/profile`).set('Authorization', `Bearer ${token}`)
+  return result.body
+}

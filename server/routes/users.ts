@@ -36,7 +36,7 @@ router.post('/', async (req, res) => {
 router.get('/profile', checkJwt, async (req: JwtRequest, res) => {
   const auth0Id = req.auth?.sub
   try {
-    const profile = await db.getLeaderBoardByUser(auth0Id as string)
+    const profile = await db.getUserProfile(auth0Id as string)
     res.json(profile)
   } catch (error) {
     console.error(error)
