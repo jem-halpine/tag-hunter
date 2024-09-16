@@ -12,10 +12,10 @@ export async function seed(knex) {
       name: 'Sensible Dad',
       email: 'wehavemcdonalds@home.com',
     },
-    // {
-    //   auth0id: 'google-oauth2|104134161417694759480',
-    //   name: 'Jeremy',
-    //   email: 'jeremy.webster106@gmail.com'
-    // }
+    {
+      auth0id: 'google-oauth2|104134161417694759480',
+      name: 'Jeremy',
+      email: 'jeremy.webster106@gmail.com'
+    }
   ])
 }
