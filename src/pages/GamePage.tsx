@@ -15,7 +15,7 @@ import { NotAuthenticated } from '@/components/NotAuthenticated'
 import { addGame } from '@/apis/games'
 import { useAuth0 } from '@auth0/auth0-react'
 import { Link, useSearchParams } from 'react-router-dom'
-import GameOver from '@/components/GameOver' 
+import GameOver from '@/components/GameOver'
 
 export default function GamePage() {
   const wellington = { lat: -41.29244, lng: 174.77876 }
@@ -24,8 +24,10 @@ export default function GamePage() {
 
   // Add "?code=taghunter" to the page URL to show artwork location on map.
   const [searchParams] = useSearchParams()
-  const [showMarker, setShowMarker] = useState(searchParams.get('code') === 'taghunter' ? true : false)
-  
+  const [showMarker, setShowMarker] = useState(
+    searchParams.get('code') === 'taghunter' ? true : false,
+  )
+
   const [guessCount, setGuessCount] = useState(5)
   const [userLocation, setUserLocation] = useState<LatLng | null>(wellington)
   const [gameMessage, setGameMessage] = useState<string>(welcome)
@@ -70,7 +72,7 @@ export default function GamePage() {
 
   const saveGameMutation = useMutation({
     mutationFn: async (game: GameData) => addGame(game),
-    onSuccess: () => {}
+    onSuccess: () => {},
   })
 
   if (isPending) {
@@ -81,162 +83,165 @@ export default function GamePage() {
     return <>Error</>
   }
 
-
-
   return (
     <>
-    <GameOver open={gameOver} onOpenChange={()=>setGameOver(false)} playAgain={playAgain} win={success}></GameOver>
-        <div id="container" className="flex flex-wrap justify-center max-w-[1440px] m-auto">
-          <div id="game-display" className="w-1/2 min-w-[540px]">
-            <div className="m-2 flex h-full flex-col items-center bg-white/80 shadow-md shadow-black/50">
-              <div
-                id="art-container"
-                className=" flex h-[500px] w-full flex-col items-center p-10 mt-auto"
-              >
-                <img
-                  className="h-full w-full max-w-[540px] rounded-md object-cover shadow-md shadow-black/50"
-                  src={`images/${artwork.imageUrl}`}
-                  alt=""
+      <GameOver
+        open={gameOver}
+        onOpenChange={() => setGameOver(false)}
+        playAgain={playAgain}
+        win={success}
+      ></GameOver>
+      <div
+        id="container"
+        className="m-auto flex max-w-[1440px] flex-wrap justify-center"
+      >
+        <div id="game-display" className="w-1/2 min-w-[540px]">
+          <div className="m-2 flex h-full flex-col items-center bg-white/80 shadow-md shadow-black/50">
+            <div
+              id="art-container"
+              className=" mt-auto flex h-[500px] w-full flex-col items-center p-10"
+            >
+              <img
+                className="h-full w-full max-w-[540px] rounded-md object-cover shadow-md shadow-black/50"
+                src={`images/${artwork.imageUrl}`}
+                alt=""
+              />
+            </div>
+
+            <IsAuthenticated>
+              <div className="mb-auto flex h-[350px] w-full max-w-[540px] flex-col items-center px-10 pb-10">
+                <div
+                  id="streetview"
+                  ref={streetViewRef}
+                  className="h-full w-full rounded-3xl shadow-lg shadow-black/50"
                 />
               </div>
-
-              <IsAuthenticated>
-                <div className="flex h-[350px] w-full max-w-[540px] flex-col items-center px-10 pb-10 mb-auto">
-                  <div
-                    id="streetview"
-                    ref={streetViewRef}
-                    className="h-full w-full rounded-3xl shadow-lg shadow-black/50"
-                  />
-                </div>
-              </IsAuthenticated>
-              <NotAuthenticated>
-                <div className="p-10 font-title text-3xl mb-auto">
-                  Log in or Sign up to unlock the Streetview portal!
-                </div>
-              </NotAuthenticated>
-            </div>
-          </div>
-
-          <div id="game-interface" className="w-1/2 min-w-[540px]">
-            <div className="m-2 flex h-full flex-col items-center bg-white/80 shadow-md shadow-black/50">
-              <div
-                id="game-message"
-                className="w-2/3 pt-10 text-center font-title text-3xl"
-              >
-                <p>{gameMessage}</p>
+            </IsAuthenticated>
+            <NotAuthenticated>
+              <div className="mb-auto p-10 font-title text-3xl">
+                Log in or Sign up to unlock the Streetview portal!
               </div>
+            </NotAuthenticated>
+          </div>
+        </div>
 
-              {gameOver && (
-                <div className="p-5 flex gap-5">
-                  <Button className="px-10 text-lg" onClick={playAgain}>
-                    Play again!
+        <div id="game-interface" className="w-1/2 min-w-[540px]">
+          <div className="m-2 flex h-full flex-col items-center bg-white/80 shadow-md shadow-black/50">
+            <div
+              id="game-message"
+              className="w-2/3 pt-10 text-center font-title text-3xl"
+            >
+              <p>{gameMessage}</p>
+            </div>
+
+            {gameOver && (
+              <div className="flex gap-5 p-5">
+                <Button className="px-10 text-lg" onClick={playAgain}>
+                  Play again!
+                </Button>
+                <Link to="/play/leaderboard">
+                  <Button className="px-10 text-lg">Leaderboard</Button>
+                </Link>
+              </div>
+            )}
+
+            {!gameOver && (
+              <div id="submission" className="flex w-full max-w-[600px] px-10">
+                <div className="p-10">
+                  <Button className="text-lg" onClick={handleSubmitGuess}>
+                    Submit
                   </Button>
-                  <Link to="/play/leaderboard"><Button className="px-10 text-lg">Leaderboard</Button></Link>
                 </div>
-              )}
 
-              {!gameOver && (
                 <div
-                  id="submission"
-                  className="flex w-full max-w-[600px] px-10"
+                  id="mistakes-container"
+                  className="flex w-3/4 justify-between p-10"
                 >
-                  <div className="p-10">
-                    <Button className="text-lg" onClick={handleSubmitGuess}>
-                      Submit
-                    </Button>
-                  </div>
-
-                  <div
-                    id="mistakes-container"
-                    className="flex w-3/4 justify-between p-10"
-                  >
-                    <>
-                      <div className={`${guessCount > 0 ? '' : 'invisible'} `}>
-                        <img
-                          src="images/favicon/spray-paint.png"
-                          alt=""
-                          className="size-12"
-                        />
-                      </div>
-                      <div className={guessCount > 1 ? '' : 'invisible'}>
-                        <img
-                          src="images/favicon/spray-paint.png"
-                          alt=""
-                          className="size-12"
-                        />
-                      </div>
-                      <div className={guessCount > 2 ? '' : 'invisible'}>
-                        <img
-                          src="images/favicon/spray-paint.png"
-                          alt=""
-                          className="size-12"
-                        />
-                      </div>
-                      <div className={guessCount > 3 ? '' : 'invisible'}>
-                        <img
-                          src="images/favicon/spray-paint.png"
-                          alt=""
-                          className="size-12"
-                        />
-                      </div>
-                      <div className={guessCount > 4 ? '' : 'invisible'}>
-                        <img
-                          src="images/favicon/spray-paint.png"
-                          alt=""
-                          className="size-12"
-                        />
-                      </div>
-                    </>
-                  </div>
-                </div>
-              )}
-              <div
-                id="map-container"
-                className="flex w-full flex-col items-center p-10"
-              >
-                <div
-                  id="map"
-                  className="h-[50vh] w-full border-2 border-thGray drop-shadow-lg"
-                >
-                  <APIProvider
-                    apiKey={'AIzaSyAniaK3l1jH7gSgpiNd-PyBMB0ygsy8QXA'}
-                  >
-                    <Map
-                      defaultCenter={wellington}
-                      defaultZoom={13}
-                      mapId="gameMap"
-                      minZoom={14}
-                      fullscreenControl={null}
-                    >
-                      <AdvancedMarker
-                        position={userLocation}
-                        draggable={true}
-                        onDrag={handleDragEnd}
+                  <>
+                    <div className={`${guessCount > 0 ? '' : 'invisible'} `}>
+                      <img
+                        src="images/favicon/spray-paint.png"
+                        alt=""
+                        className="size-12"
                       />
-
-                      {showMarker && (
-                        <AdvancedMarker
-                          position={{
-                            lat: artwork.latitude,
-                            lng: artwork.longitude,
-                          }}
-                        >
-                          <Pin background={'gold'} borderColor={'black'} />
-                        </AdvancedMarker>
-                      )}
-                    </Map>
-                  </APIProvider>
+                    </div>
+                    <div className={guessCount > 1 ? '' : 'invisible'}>
+                      <img
+                        src="images/favicon/spray-paint.png"
+                        alt=""
+                        className="size-12"
+                      />
+                    </div>
+                    <div className={guessCount > 2 ? '' : 'invisible'}>
+                      <img
+                        src="images/favicon/spray-paint.png"
+                        alt=""
+                        className="size-12"
+                      />
+                    </div>
+                    <div className={guessCount > 3 ? '' : 'invisible'}>
+                      <img
+                        src="images/favicon/spray-paint.png"
+                        alt=""
+                        className="size-12"
+                      />
+                    </div>
+                    <div className={guessCount > 4 ? '' : 'invisible'}>
+                      <img
+                        src="images/favicon/spray-paint.png"
+                        alt=""
+                        className="size-12"
+                      />
+                    </div>
+                  </>
                 </div>
-                <div id="coordinates" className="flex flex-col items-center">
-                  <div className="flex gap-5 p-2">
-                    <div className='font-title text-2xl'>{`Latitude: ${userLocation?.lat.toFixed(6)}`}</div>
-                    <div className='font-title text-2xl'>{`Longitude: ${userLocation?.lng.toFixed(6)}`}</div>
-                  </div>
+              </div>
+            )}
+            <div
+              id="map-container"
+              className="flex w-full flex-col items-center p-10"
+            >
+              <div
+                id="map"
+                className="h-[50vh] w-full border-2 border-thGray drop-shadow-lg"
+              >
+                <APIProvider apiKey={import.meta.env.VITE_GOOGLE_MAPS_API_KEY}>
+                  <Map
+                    defaultCenter={wellington}
+                    defaultZoom={13}
+                    mapId="gameMap"
+                    minZoom={14}
+                    fullscreenControl={null}
+                  >
+                    <AdvancedMarker
+                      position={userLocation}
+                      draggable={true}
+                      onDrag={handleDragEnd}
+                    />
+
+                    {showMarker && (
+                      <AdvancedMarker
+                        position={{
+                          lat: artwork.latitude,
+                          lng: artwork.longitude,
+                        }}
+                      >
+                        <Pin background={'gold'} borderColor={'black'} />
+                      </AdvancedMarker>
+                    )}
+                  </Map>
+                </APIProvider>
+              </div>
+              <div id="coordinates" className="flex flex-col items-center">
+                <div className="flex gap-5 p-2">
+                  <div className="font-title text-2xl">{`Latitude: ${userLocation?.lat.toFixed(6)}`}</div>
+                  <div className="font-title text-2xl">{`Longitude: ${userLocation?.lng.toFixed(6)}`}</div>
                 </div>
               </div>
             </div>
           </div>
         </div>
+      </div>
     </>
   )
 
@@ -265,7 +270,7 @@ export default function GamePage() {
       setGuessCount(guessCount - 1)
       const guesses = guessCount - 1
       const guessesUsed = 5 - guesses
-    
+
       const dist = game.calculateDistance(
         { lat: artwork.latitude, lng: artwork.longitude },
         userLocation,
@@ -280,14 +285,12 @@ export default function GamePage() {
           auth0Id: user?.sub,
           artworkId: artwork.id,
           artWasFound: true,
-          guessesUsed
+          guessesUsed,
         })
         return
-
       } else if (guesses > 0) {
         setGameMessage(game.failureMessage(dist))
         return
-
       } else {
         setGameMessage('Game Over')
         setGameOver(true)
@@ -295,9 +298,9 @@ export default function GamePage() {
           auth0Id: user?.sub,
           artworkId: artwork.id,
           artWasFound: false,
-          guessesUsed
+          guessesUsed,
         })
-      }      
+      }
     }
   }
 }

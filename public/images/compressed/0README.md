@@ -1,0 +1,1 @@
+Don't shuffle the images in this folder. These are all compressed and a mix up can lessen the quality of the images by ~50%
