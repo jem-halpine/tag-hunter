@@ -1,41 +1,49 @@
-import { useUser } from '@/hooks/useUsers'
-import { useEffect } from 'react'
-import { useNavigate } from 'react-router-dom'
-import { IsAuthenticated } from './IsAuthenticated'
-import { NotAuthenticated } from './NotAuthenticated'
-// import { Users } from 'models/users'
-import { useAuth0 } from '@auth0/auth0-react'
+import { useUser } from "@/hooks/useUsers"
+import { useAuth0 } from "@auth0/auth0-react"
+import { useEffect } from "react"
+import { useNavigate } from "react-router-dom"
 
 function Register() {
-  const { user, getAccessTokenSilently } = useAuth0()
-
+  
   const navigate = useNavigate()
-  const users = useUser()
+  const { user, isAuthenticated, getAccessTokenSilently } = useAuth0()
+  const userTable = useUser()
 
-  useEffect(() => {
-    async function getUserData() {
-      if (users.data) navigate('/')
-      else {
-        const token = await getAccessTokenSilently()
-        await users.add.mutate({
-          newUser: { name: user?.name, email: user?.email, auth0id: user?.sub },
-          token,
-        })
-        navigate('/')
+  useEffect(()=> {
+
+    async function checkauth(){
+      if(isAuthenticated){
+        console.log('User is authenticated')
+        handleAdd()
       }
     }
-    getUserData()
-  }, [users.data, navigate])
-  // console.log('Jemjemjem', users.data)
+    
+    checkauth()
+
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isAuthenticated])
+
+  const handleAdd = async () => {
+
+    const token  = await getAccessTokenSilently()
+    userTable.add.mutate({newUser: {
+      auth0Id: String(user?.sub),
+      name: user?.name,
+      email: user?.email
+    }, token})
+
+    navigate('/')
+
+  }
+
+  if(!isAuthenticated){
+    return <div className="py-20 w-full text-center">Not Authenticated</div>
+  }
+
 
   return (
-    <div>
-      <IsAuthenticated>
-        <p>Boo</p>
-      </IsAuthenticated>
-      <NotAuthenticated>
-        <p>Please log in</p>
-      </NotAuthenticated>
+    <div  className="py-20 w-full text-center">
+      Please wait while we redirect you to our homepage...
     </div>
   )
 }

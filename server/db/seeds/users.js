@@ -14,7 +14,7 @@ export async function seed(knex) {
     },
     {
       auth0id: 'google-oauth2|104134161417694759480',
-      name: 'Jeremy',
+      name: 'Jeremy Webster',
       email: 'jeremy.webster106@gmail.com'
     }
   ])

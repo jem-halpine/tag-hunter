@@ -47,7 +47,7 @@ export default function Nav() {
               <AvatarFallback>CN</AvatarFallback>
             </Avatar>
             <DropdownMenu>
-              <DropdownMenuTrigger>
+              <DropdownMenuTrigger asChild>
                 <Button variant="default">
                   {user?.nickname}{' '}
                   <svg
