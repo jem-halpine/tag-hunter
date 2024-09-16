@@ -1,40 +1,49 @@
-import { useUser } from '@/hooks/useUsers'
-import { useEffect } from 'react'
-import { useNavigate } from 'react-router-dom'
-import { IsAuthenticated } from './IsAuthenticated'
-import { NotAuthenticated } from './NotAuthenticated'
-import { useAuth0 } from '@auth0/auth0-react'
+import { useUser } from "@/hooks/useUsers"
+import { useAuth0 } from "@auth0/auth0-react"
+import { useEffect } from "react"
+import { useNavigate } from "react-router-dom"
 
 function Register() {
-  const { user, getAccessTokenSilently } = useAuth0()
-
+  
   const navigate = useNavigate()
-  const users = useUser()
+  const { user, isAuthenticated, getAccessTokenSilently } = useAuth0()
+  const userTable = useUser()
 
-  useEffect(() => {
-    async function getUserData() {
-      if (users.data) navigate('/')
-      else {
-        const token = await getAccessTokenSilently()
-        users.add.mutate({
-          newUser: { name: "jeremy", email: user?.email, auth0id: user?.sub },
-          token,
-        })
-        // navigate('/')
+  useEffect(()=> {
+
+    if(userTable.data) {navigate('/')}
+    
+    async function checkauth(){
+      if(isAuthenticated){
+        console.log('User is authenticated')
+        handleAdd()
       }
     }
-    getUserData()
-  }, [])
-  // console.log('Jemjemjem', users.data)
+    
+    checkauth()
+
+  }, [isAuthenticated])
+
+  const handleAdd = async () => {
+
+    const token  = await getAccessTokenSilently()
+    userTable.add.mutate({newUser: {
+      auth0Id: String(user?.sub),
+      name: user?.name,
+      email: user?.email
+    }, token})
+  }
+
+  if(!isAuthenticated){
+    return <div>Not Authenticated</div>
+  }
+
+  // console.log(newUser)
 
   return (
     <div>
-      <IsAuthenticated>
-        <p>Boo</p>
-      </IsAuthenticated>
-      <NotAuthenticated>
-        <p>Please log in</p>
-      </NotAuthenticated>
+      {/* {newUser.name}  */}
+      Thanks for logging in 
     </div>
   )
 }

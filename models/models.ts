@@ -52,7 +52,7 @@ export interface LeaderboardRow {
 }
 
 export interface UserData {
-  auth0id: string
+  auth0Id: string
   name: string
   email: string
 }

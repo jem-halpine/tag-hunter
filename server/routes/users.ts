@@ -21,8 +21,11 @@ router.get('/', checkJwt, async (req: JwtRequest, res) => {
 })
 
 //POST /api/v1/users
-router.post('/', checkJwt, async (req: JwtRequest, res) => {
-  const newUser: UserData = req.body
+// router.post('/', checkJwt, async (req: JwtRequest, res) => {
+router.post('/', async (req, res) => {
+  
+  const newUser = req.body
+
   try {
     await db.addUser(newUser)
     res.sendStatus(201)
@@ -33,3 +36,24 @@ router.post('/', checkJwt, async (req: JwtRequest, res) => {
 })
 
 export default router
+
+
+
+// //////////////////////////////////////////////////
+// //POST /api/v1/users
+// router.post('/', checkJwt, async (req: JwtRequest, res) => {
+//   try {
+//     const newUser = req.body
+//     const auth0id = req.auth?.sub
+//     const [users] = await db.addUser({
+//       ...newUser,
+//       auth0id,
+//     })
+//     res.json(users)
+//   } catch (error) {
+//     console.error(error)
+//     res.sendStatus(500)
+//   }
+// })
+
+// export default router
