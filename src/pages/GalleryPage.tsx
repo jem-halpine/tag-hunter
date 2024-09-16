@@ -3,10 +3,13 @@ import { Title } from '@/components/Title'
 import { useInfiniteGallery } from '@/hooks/use-infinite-gallery'
 import Masonry from 'react-masonry-css'
 import { Link } from 'react-router-dom'
+import Loading from '@/components/Loading'
+
+
 export default function Gallery() {
   const { data, fetchNextPage, hasNextPage, status } = useInfiniteGallery()
 
-  if (status === 'pending') return <div>Loading...</div>
+  if (status === 'pending') return <Loading />
   if (status === 'error') return <div>Error loading gallery</div>
 
   const artworks = data?.pages.flatMap((page) => page.data) || []
