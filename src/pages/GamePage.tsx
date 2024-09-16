@@ -16,6 +16,7 @@ import { addGame } from '@/apis/games'
 import { useAuth0 } from '@auth0/auth0-react'
 import { Link, useSearchParams } from 'react-router-dom'
 import GameOver from '@/components/GameOver'
+import Loading from '@/components/Loading'
 
 export default function GamePage() {
   const wellington = { lat: -41.29244, lng: 174.77876 }
@@ -76,7 +77,7 @@ export default function GamePage() {
   })
 
   if (isPending) {
-    return <>Loading</>
+    return <Loading />
   }
 
   if (isError) {

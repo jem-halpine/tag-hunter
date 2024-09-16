@@ -9,6 +9,7 @@ import {
   TableHeader,
   TableRow,
 } from '@/components/ui/table'
+import Loading from '@/components/Loading'
 
 export default function Leaderboard() {
   const {
@@ -21,7 +22,7 @@ export default function Leaderboard() {
   })
 
   if (isPending) {
-    return <>Loading</>
+    return <Loading />
   }
 
   if (isError) {
