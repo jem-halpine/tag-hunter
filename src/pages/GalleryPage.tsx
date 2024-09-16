@@ -24,7 +24,7 @@ export default function Gallery() {
 
   return (
     <div className="m-auto max-w-[1440px] p-10">
-      <div className='pb-10'>
+      <div>
         <Title title="Gallery" />
       </div>
       <InfiniteScroll
@@ -46,7 +46,7 @@ export default function Gallery() {
           {artworks.map((item) => (
             <div key={item.id}>
               <Link to={`/gallery/${item.id}`}>
-                <img src={`/images/${item.imageUrl}`} alt={item.description} className='shadow-md shadow-black/50'/>
+                <img src={`/images/${item.imageUrl}`} alt={item.description} />
               </Link>
             </div>
           ))}
