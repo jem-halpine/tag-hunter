@@ -41,7 +41,7 @@ export default function Gallery() {
             <div key={item.id}>
               {/* <Route path="/gallery/:id" element={<ViewArt />} /> */}
               <Link to={`/gallery/${item.id}`}>
-                <img src={`/images/${item.imageUrl}`} alt={item.description} />
+                <img src={`/images/compressed/${item.imageUrl}`} alt={item.description} />
               </Link>
             </div>
           ))}
