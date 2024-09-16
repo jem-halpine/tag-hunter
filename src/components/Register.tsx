@@ -2,6 +2,7 @@ import { useUser } from "@/hooks/useUsers"
 import { useAuth0 } from "@auth0/auth0-react"
 import { useEffect } from "react"
 import { useNavigate } from "react-router-dom"
+import { Button } from "./ui/button"
 
 function Register() {
   
@@ -11,8 +12,6 @@ function Register() {
 
   useEffect(()=> {
 
-    if(userTable.data) {navigate('/')}
-    
     async function checkauth(){
       if(isAuthenticated){
         console.log('User is authenticated')
@@ -32,18 +31,19 @@ function Register() {
       name: user?.name,
       email: user?.email
     }, token})
+
+    navigate('/')
+
   }
 
-  if(!isAuthenticated){
+  if(!isAuthenticated && !userTable.data){
     return <div>Not Authenticated</div>
   }
 
-  // console.log(newUser)
 
   return (
     <div>
-      {/* {newUser.name}  */}
-      Thanks for logging in 
+      Please wait while we log you in
     </div>
   )
 }
