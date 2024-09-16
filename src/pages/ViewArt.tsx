@@ -9,6 +9,7 @@ import {
 } from '@vis.gl/react-google-maps'
 import { Button } from '@/components/ui/button'
 import { Link } from 'react-router-dom'
+import Loading from '@/components/Loading'
 
 export default function ViewArt() {
   const { id: artworkID } = useParams()
@@ -23,7 +24,7 @@ export default function ViewArt() {
   })
 
   if (isPending) {
-    return <>Loading</>
+    return <Loading />
   }
 
   if (isError) {
