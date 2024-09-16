@@ -11,7 +11,7 @@ export async function getUserById(auth0id: string): Promise<AppUsers> {
   return db('users').where({ auth0id }).select('*').first()
 }
 
-export async function addUser(user: AppUsers):Promise <AppUsers> {
+export async function addUser(user: AppUsers):Promise <AppUsers[]> {
   return db('users').insert(user)
 }
 

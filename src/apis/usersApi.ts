@@ -1,7 +1,6 @@
 import request from 'superagent'
 import { AppUsers } from 'models/AppUsers'
 import { LeaderboardRow } from 'models/models'
-import { User } from '@auth0/auth0-react'
 
 const usersUrl = '/api/v1/users'
 
