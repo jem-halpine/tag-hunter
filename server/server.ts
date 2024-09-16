@@ -6,7 +6,7 @@ import knexConfig from './db/knexfile.js'
 
 import artworkRoutes from './routes/artworks.ts'
 import playRoutes from './routes/play.ts'
-import usersRoutes from './routes/usersRoutes.ts'
+import usersRoutes from './routes/users.ts'
 import gameRoutes from './routes/games.ts'
 
 type Environments = 'development' | 'test' | 'production'

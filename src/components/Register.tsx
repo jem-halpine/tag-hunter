@@ -3,7 +3,6 @@ import { useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { IsAuthenticated } from './IsAuthenticated'
 import { NotAuthenticated } from './NotAuthenticated'
-// import { Users } from 'models/users'
 import { useAuth0 } from '@auth0/auth0-react'
 
 function Register() {
@@ -17,15 +16,15 @@ function Register() {
       if (users.data) navigate('/')
       else {
         const token = await getAccessTokenSilently()
-        await users.add.mutate({
-          newUser: { name: user?.name, email: user?.email, auth0id: user?.sub },
+        users.add.mutate({
+          newUser: { name: "jeremy", email: user?.email, auth0id: "Jeremy" },
           token,
         })
-        navigate('/')
+        // navigate('/')
       }
     }
     getUserData()
-  }, [users.data, navigate])
+  }, [])
   // console.log('Jemjemjem', users.data)
 
   return (

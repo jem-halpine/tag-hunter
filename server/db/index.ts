@@ -1,5 +1,5 @@
 import connection from './connection'
-import { Artwork, ArtworkPaginate, Game, GameData } from 'models/models'
+import { Artwork, ArtworkPaginate, Game, GameData, UserData } from 'models/models'
 
 
 const db = connection
@@ -69,7 +69,6 @@ export async function getLeaderBoard(): Promise<Game[]> {
 
 }
 
-
 export async function addGame(data: GameData) {
   
   const { 
@@ -112,4 +111,12 @@ export async function getPaginateArtworks(
       perPage: 10,
       currentPage: page,
     })
+}
+
+export async function getUserById(auth0id: string): Promise<UserData> {
+  return db('users').where({ auth0id }).first()
+}
+
+export async function addUser(user: UserData) {
+  return db('users').insert(user)
 }

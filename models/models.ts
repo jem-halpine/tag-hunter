@@ -50,3 +50,9 @@ export interface LeaderboardRow {
   wins: number
   guesses: number
 }
+
+export interface UserData {
+  auth0id: string
+  name: string
+  email: string
+}
