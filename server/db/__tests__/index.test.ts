@@ -2,6 +2,8 @@ import { describe, it, expect, beforeAll, beforeEach, afterAll } from 'vitest'
 import connection from '../connection.ts'
 import * as db from '../index.ts'
 
+import '../../server.ts'
+
 beforeAll(async () => {
   await connection.migrate.latest()
 })
@@ -14,14 +16,7 @@ afterAll(async () => {
   await connection.destroy()
 })
 
-describe('getAllArtwork()', () => {
-  it('gets all the artworks from the database', async () => {
-    const artworks = await db.getAllArtwork()
-
-    expect(artworks).toHaveLength(24)
-  })
-})
-
+//getArtworkById(id)
 describe('getArtworkById(id)', () => {
   it('uses an id parameter to get a specific artwork', async () => {
     const testId = 1
@@ -47,6 +42,16 @@ describe('getArtworkById(id)', () => {
   })
 })
 
+//getAllArtwork()
+describe('getAllArtwork()', () => {
+  it('gets all the artworks from the database', async () => {
+    const artworks = await db.getAllArtwork()
+
+    expect(artworks).toHaveLength(24)
+  })
+})
+
+//getRandomArtwork()
 describe('getRandomArtwork()', () => {
   it('gets an artwork from the database at random', async () => {
     const randomArtwork = await db.getRandomArtwork()
@@ -64,6 +69,7 @@ describe('getRandomArtwork()', () => {
   })
 })
 
+//getGames()
 describe('getGames()', () => {
   it('returns a list of games', async () => {
     const games = await db.getGames()
@@ -81,6 +87,7 @@ describe('getGames()', () => {
   })
 })
 
+//getLeaderboard()
 describe('getLeaderBoard()', () => {
   it('returns a leaderboard using the user stats', async () => {
     const leaderboard = await db.getLeaderBoard()
@@ -96,12 +103,91 @@ describe('getLeaderBoard()', () => {
   })
 })
 
-//TODO: addGame()
+//addGame()
 describe('addGame()', () => {
-  it.skip('adds a game', async () => {})
+  it('adds a game to the games database', async () => {
+    const fakeGame = {
+      auth0Id: 'auth0|user123',
+      artworkId: 1,
+      artWasFound: true,
+      guessesUsed: 3,
+      rating: 5,
+    }
+
+    await db.addGame(fakeGame)
+
+    const addedGame = await connection('games')
+      .where('user_id', fakeGame.auth0Id)
+      .andWhere('artwork_id', fakeGame.artworkId)
+      .first()
+
+    expect(addedGame).toBeDefined()
+    expect(addedGame.user_id).toBe(fakeGame.auth0Id)
+    expect(addedGame.artwork_id).toBe(fakeGame.artworkId)
+    expect(addedGame.art_was_found).toBe(fakeGame.artWasFound ? 1 : 0)
+    expect(addedGame.guesses_used).toBe(fakeGame.guessesUsed)
+    expect(addedGame.rating).toBe(fakeGame.rating)
+  })
 })
 
 // TODO: getPaginateArtworks()
 describe('getPaginateArtworks()', () => {
-  it.skip('returns paginated artwork data based on the page number', async () => {})
+  it('returns paginated artwork data based on the page number', async () => {
+    const page = 1
+    const paginatedArtworks = await db.getPaginateArtworks(page)
+
+    expect(paginatedArtworks).toBeDefined()
+    expect(paginatedArtworks.data).toHaveLength(10)
+
+    const artwork = paginatedArtworks.data[0]
+    expect(artwork).toHaveProperty('id')
+    expect(artwork).toHaveProperty('location')
+    expect(artwork).toHaveProperty('latitude')
+    expect(artwork).toHaveProperty('longitude')
+    expect(artwork).toHaveProperty('imageUrl')
+    expect(artwork).toHaveProperty('artist')
+    expect(artwork).toHaveProperty('description')
+    expect(artwork).toHaveProperty('userId')
+
+    expect(paginatedArtworks.pagination).toHaveProperty('total')
+    expect(paginatedArtworks.pagination).toHaveProperty('perPage', 10)
+    expect(paginatedArtworks.pagination).toHaveProperty('currentPage', page)
+  })
+})
+
+//getUserById(auth0id)
+describe('getUserById()', () => {
+  it('returns user with the matching id', async () => {
+    const testId = 'Auth0999'
+    const user = await db.getUserById(testId)
+    expect(user).toEqual({
+      auth0Id: 'Auth0999',
+      name: 'Ronald McDonald-San',
+      email: 'coolest.guy@ever.com',
+    })
+  })
+
+  it('returns undefined if user cannot be found', async () => {
+    const fakeId = '69420'
+    const user = await db.getUserById(fakeId)
+    expect(user).toBeUndefined()
+  })
+})
+
+//addUser(user)
+describe('addUser()', () => {
+  it('adds a new user to the database', async () => {
+    const newUser = {
+      auth0Id: 'Auth01010101',
+      name: 'Jimbob',
+      email: 'that@guy.com',
+    }
+    await db.addUser(newUser)
+    const addedUser = await db.getUserById(newUser.auth0Id)
+    expect(addedUser).toEqual({
+      auth0Id: 'Auth01010101',
+      name: 'Jimbob',
+      email: 'that@guy.com',
+    })
+  })
 })
