@@ -29,9 +29,9 @@ export default function Nav() {
   }
 
   return (
-    <div className="ml-12 mr-12 mt-12 flex justify-between items-center">
+    <div className="ml-12 mr-12 mt-12 flex items-center justify-between">
       <Link to="/">
-        <h1 className='font-pageName text-7xl'>Tag Hunter</h1>
+        <h1 className="font-pageName text-7xl">Tag Hunter</h1>
       </Link>
       <div>
         <NotAuthenticated>
