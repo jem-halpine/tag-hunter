@@ -155,3 +155,4 @@ export async function newArtwork(data: {
 }) {
   return await db('artworks').insert(data)
 }
+
