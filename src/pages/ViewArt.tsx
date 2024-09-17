@@ -34,7 +34,10 @@ export default function ViewArt() {
   console.log(artwork)
   const artPos = { lat: artwork.latitude, lng: artwork.longitude }
   return (
-    <div id="container" className="flex w-full flex-col items-center p-10">
+    <div
+      id="container"
+      className="flex w-4/5 flex-col items-center border-2 border-thGray bg-white/50 p-10"
+    >
       <div className="flex w-full flex-wrap justify-evenly">
         <img
           className="w-[30vw] min-w-[200px]  rounded-md shadow-md"
