@@ -205,6 +205,12 @@ describe('getUserProfile(user_id)', () => {
       games: 4,
       wins: 1,
       guesses: 18,
+      unlockedArt: [
+        {
+          id: 4,
+          imageUrl: 'astro-driver.webp',
+        },
+      ],
     })
   })
 
@@ -219,6 +225,7 @@ describe('getUserProfile(user_id)', () => {
       games: 0,
       wins: null,
       guesses: null,
+      unlockedArt: [],
     })
   })
 })
