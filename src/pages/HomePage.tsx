@@ -83,7 +83,7 @@ export default function Home() {
       </div>
     </div>
 
-      <div className="flex flex-col items-center fixed top-1/4 left-1/2 -translate-x-1/2">
+    <div className="fixed left-1/2 top-1/2 flex -translate-x-1/2 -translate-y-1/2 transform flex-col">
         <Link to="/play">
           <Button variant="tagHunter" size="homepage">
             Start Game

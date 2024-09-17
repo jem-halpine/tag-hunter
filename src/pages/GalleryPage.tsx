@@ -24,8 +24,8 @@ export default function Gallery() {
   }
 
   return (
-    <div className="m-auto max-w-[1440px] p-10">
-      <div className='flex justify-between py-5'>
+    <div className="m-auto max-w-[1440px] px-10 py-5">
+      <div className='flex justify-between'>
         <div>
           <Title title="Gallery" />
         </div>
