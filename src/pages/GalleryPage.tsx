@@ -6,6 +6,7 @@ import { Link } from 'react-router-dom'
 import Loading from '@/components/Loading'
 import Error from '@/components/Error'
 import { Button } from '@/components/ui/button'
+import { IsAuthenticated } from '@/components/IsAuthenticated'
 
 export default function Gallery() {
   const { data, fetchNextPage, hasNextPage, status } = useInfiniteGallery()
@@ -24,17 +25,19 @@ export default function Gallery() {
   }
 
   return (
-    <div className="m-auto max-w-[1440px] p-10">
-      <div className='flex justify-between py-5'>
+    <div className="m-auto max-w-[1440px] px-10 py-5">
+      <div className='flex justify-between'>
         <div>
           <Title title="Gallery" />
         </div>
-        <div className="pt-5">
+        <div className='pt-5'> 
+          <IsAuthenticated>
           <Link to="/submit">
             <Button variant="default" size="lg">
               Submit Art
             </Button>
           </Link>
+          </IsAuthenticated>
         </div>
       </div>
       <InfiniteScroll
