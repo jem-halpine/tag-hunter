@@ -4,16 +4,6 @@ export async function seed(knex) {
 
   // Inserts seed entries
   await knex('artworks').insert([
-    // {
-    //   id: 1,
-    //   location: '2 Mein Street, Newtown',
-    //   latitude: -41.31092143587734,
-    //   longitude: 174.77957489029637,
-    //   artist: null,
-    //   image_url: 'te-ao-maori-zoo.webp',
-    //   description: 'art',
-    //   user_id: '1',
-    // },
     {
       id: 1,
       location: '160 Tory Street, Te Aro',
