@@ -22,7 +22,6 @@ router.get('/', checkJwt, async (req: JwtRequest, res) => {
 //POST /api/v1/users
 // router.post('/', checkJwt, async (req: JwtRequest, res) => {
 router.post('/', async (req, res) => {
-  
   const newUser: UserData = req.body
 
   try {
@@ -34,5 +33,15 @@ router.post('/', async (req, res) => {
   }
 })
 
-export default router
+router.get('/profile', checkJwt, async (req: JwtRequest, res) => {
+  const auth0Id = req.auth?.sub
+  try {
+    const profile = await db.getUserProfile(auth0Id as string)
+    res.json(profile)
+  } catch (error) {
+    console.error(error)
+    res.sendStatus(500)
+  }
+})
 
+export default router
