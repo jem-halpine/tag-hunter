@@ -25,13 +25,17 @@ export default function Gallery() {
 
   return (
     <div className="m-auto max-w-[1440px] p-10">
-      <div>
-        <Title title="Gallery" />
-        <Link to="/submit">
-          <Button variant="default" size="lg">
-            Submit Art
-          </Button>
-        </Link>
+      <div className='flex justify-between py-5'>
+        <div>
+          <Title title="Gallery" />
+        </div>
+        <div className="pt-5">
+          <Link to="/submit">
+            <Button variant="default" size="lg">
+              Submit Art
+            </Button>
+          </Link>
+        </div>
       </div>
       <InfiniteScroll
         dataLength={artworks.length}
