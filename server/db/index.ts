@@ -132,3 +132,13 @@ export async function getUserProfile(user_id: string) {
     .sum('guesses_used as guesses')
     .first()
 }
+
+export async function newArtwork(data: {
+  latitude: number
+  longitude: number
+  artist: string | null
+  image_url: string
+  location: string
+}) {
+  return await db('artworks').insert(data)
+}
