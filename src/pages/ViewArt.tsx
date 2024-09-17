@@ -66,9 +66,11 @@ export default function ViewArt() {
         <span className="font-bold">Artist:</span>{' '}
         {artwork.artist ? artwork.artist : 'Unknown Artist'}
       </p>
-      <p className="text-lg">
-        <span className="font-bold">Street Address:</span> {artwork.location}
-      </p>
+      {artwork.location && (
+        <p className="text-lg">
+          <span className="font-bold">Street Address:</span> {artwork.location}
+        </p>
+      )}
       <Link to="/gallery" className="mt-3">
         <Button>Back</Button>
       </Link>
