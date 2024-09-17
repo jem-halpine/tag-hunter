@@ -30,7 +30,7 @@ export default function Gallery() {
         <div>
           <Title title="Gallery" />
         </div>
-        <div>
+        <div className='pt-5'> 
           <IsAuthenticated>
           <Link to="/submit">
             <Button variant="default" size="lg">
