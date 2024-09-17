@@ -36,7 +36,7 @@ export default function ViewArt() {
   return (
     <div
       id="container"
-      className="mx-auto mt-4 flex w-4/5 items-center justify-between border-2 border-thGray bg-white/50 p-10"
+      className="mx-auto mb-20 mt-10 flex w-4/5 items-center justify-between gap-6 border-2 border-thGray bg-white/50 p-10"
     >
       <div>
         <img
