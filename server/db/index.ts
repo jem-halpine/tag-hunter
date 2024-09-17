@@ -145,3 +145,14 @@ export async function getUserProfile(user_id: string) {
     unlockedArt
   }
   }
+
+export async function newArtwork(data: {
+  latitude: number
+  longitude: number
+  artist: string | null
+  image_url: string
+  location: string
+}) {
+  return await db('artworks').insert(data)
+}
+

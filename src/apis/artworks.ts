@@ -20,3 +20,8 @@ export async function getPaginateGallery(
   }
   return res.json()
 }
+
+export async function newArt(formData: FormData): Promise<Artwork> {
+  const res = await request.post('/api/v1/artworks/new').send(formData)
+  return res.body
+}
