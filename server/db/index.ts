@@ -123,7 +123,7 @@ export async function addUser(user: UserData) {
 }
 
 export async function getUserProfile(user_id: string) {
-  return await db('users')
+  const profile = await db('users')
     .leftJoin('games', 'users.auth0Id', '=', 'games.user_id')
     .where('users.auth0id', user_id)
     .select('users.name', 'users.email')
@@ -131,4 +131,6 @@ export async function getUserProfile(user_id: string) {
     .sum('games.art_was_found as wins')
     .sum('guesses_used as guesses')
     .first()
+
+  return profile
 }
