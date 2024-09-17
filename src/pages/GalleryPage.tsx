@@ -6,6 +6,7 @@ import { Link } from 'react-router-dom'
 import Loading from '@/components/Loading'
 import Error from '@/components/Error'
 import { Button } from '@/components/ui/button'
+import { IsAuthenticated } from '@/components/IsAuthenticated'
 
 export default function Gallery() {
   const { data, fetchNextPage, hasNextPage, status } = useInfiniteGallery()
@@ -29,12 +30,14 @@ export default function Gallery() {
         <div>
           <Title title="Gallery" />
         </div>
-        <div className="pt-5">
+        <div>
+          <IsAuthenticated>
           <Link to="/submit">
             <Button variant="default" size="lg">
               Submit Art
             </Button>
           </Link>
+          </IsAuthenticated>
         </div>
       </div>
       <InfiniteScroll
