@@ -191,3 +191,34 @@ describe('addUser()', () => {
     })
   })
 })
+
+//getUserProfile(user_id)
+describe('getUserProfile(user_id)', () => {
+  it('gets user profile data using the provided user id', async () => {
+    const testId = 'Auth0999'
+
+    const userProfile = await db.getUserProfile(testId)
+
+    expect(userProfile).toEqual({
+      name: 'Ronald McDonald-San',
+      email: 'coolest.guy@ever.com',
+      games: 4,
+      wins: 1,
+      guesses: 18,
+    })
+  })
+
+  it('returns undefined when the user cannot be found', async () => {
+    const fakeId = 'thebirdsarenotreal'
+
+    const userProfile = await db.getUserProfile(fakeId)
+
+    expect(userProfile).toEqual({
+      name: null,
+      email: null,
+      games: 0,
+      wins: null,
+      guesses: null,
+    })
+  })
+})

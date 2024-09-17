@@ -23,8 +23,6 @@ describe('GET /artworks/:id', () => {
   //fix this at some point
   it.skip('should return the correct artwork', async () => {
     const res = await request(server).get('/api/v1/artworks/1')
-    console.log('Response status:', res.status)
-    console.log('Response body:', res.body)
     expect(res.body).toEqual({
       id: 1,
       location: '2 Mein Street, Newtown',
