@@ -132,5 +132,16 @@ export async function getUserProfile(user_id: string) {
     .sum('guesses_used as guesses')
     .first()
 
-  return profile
-}
+  const unlockedArt = await db('games')
+    .join('artworks','artworks.id','=','games.artwork_id')
+    .where("games.user_id", user_id)
+    .andWhere("games.art_was_found", 1)
+    .select("artworks.id", "artworks.image_url as imageUrl")
+    .distinct()
+
+
+  return {
+    ...profile,
+    unlockedArt
+  }
+  }
