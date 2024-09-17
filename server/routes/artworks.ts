@@ -11,6 +11,9 @@ router.get('/:id', async (req, res) => {
 
   try {
     const artwork = await db.getArtworkById(id)
+    if (!artwork) {
+      return res.sendStatus(404)
+    }
     res.json(artwork)
   } catch (error) {
     res.sendStatus(500)
