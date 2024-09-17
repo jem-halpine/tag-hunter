@@ -95,7 +95,7 @@ export default function GamePage() {
       ></GameOver>
       <div
         id="container"
-        className="m-auto flex max-w-[1440px] flex-wrap justify-center"
+        className="pt-10 m-auto flex max-w-[1440px] flex-wrap justify-center"
       >
         <div id="game-display" className="w-1/2 min-w-[540px]">
           <div className="m-2 flex h-full flex-col items-center bg-white/80 shadow-md shadow-black/50">
@@ -150,7 +150,7 @@ export default function GamePage() {
             {!gameOver && (
               <div id="submission" className="flex w-full max-w-[600px] px-10">
                 <div className="p-10">
-                  <Button className="text-lg" onClick={handleSubmitGuess}>
+                  <Button className="p-7 text-lg" onClick={handleSubmitGuess}>
                     Submit
                   </Button>
                 </div>

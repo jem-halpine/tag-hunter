@@ -31,28 +31,38 @@ export default function Leaderboard() {
   }
 
   return (
-    <div className="flex flex-col items-center">
-      <div className='w-[540px] min-h-[80vh] bg-white/80 shadow-md shadow-black/50 p-10'>
-        <Table>
-          <TableCaption>Global Taghunter Member Rankings </TableCaption>
-          <TableHeader>
-            <TableRow>
-              <TableHead className="">Player</TableHead>
-              <TableHead>Games Played</TableHead>
-              <TableHead className="text-right">Games Won</TableHead>
-            </TableRow>
-          </TableHeader>
-          <TableBody>
-            {leaderboard.map((row) => (
-              <TableRow key={row.name}>
-                <TableCell className="font-medium">{row.name}</TableCell>
-                <TableCell>{row.games}</TableCell>
-                <TableCell className="text-right">{row.wins}</TableCell>
+      <div className="flex flex-col items-center">
+        <div className="min-h-[80vh] w-[640px] bg-white/80 p-10 shadow-md shadow-black/50">
+          <Table>
+            <TableCaption>Global Taghunter Member Rankings </TableCaption>
+            <TableHeader>
+              <TableRow>
+                <TableHead className="font-title text-3xl">Player</TableHead>
+                <TableHead className="font-title text-3xl">
+                  Games Played
+                </TableHead>
+                <TableHead className="text-right font-title text-3xl">
+                  Games Won
+                </TableHead>
               </TableRow>
-            ))}
-          </TableBody>
-        </Table>
+            </TableHeader>
+            <TableBody>
+              {leaderboard.map((row) => (
+                <TableRow key={row.name}>
+                  <TableCell className="text-lg font-medium">
+                    {row.name}
+                  </TableCell>
+                  <TableCell className="text-center text-lg">
+                    {row.games}
+                  </TableCell>
+                  <TableCell className="text-center text-lg">
+                    {row.wins}
+                  </TableCell>
+                </TableRow>
+              ))}
+            </TableBody>
+          </Table>
+        </div>
       </div>
-    </div>
   )
 }

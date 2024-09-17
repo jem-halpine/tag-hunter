@@ -19,7 +19,7 @@ const buttonVariants = cva(
         ghost: 'hover:bg-accent hover:text-accent-foreground',
         link: 'text-primary underline-offset-4 hover:underline',
         tagHunter:
-          'border border-4 border-solid border-thBlack bg-thGold font-title text-4xl text-thBlack hover:scale-110',
+          'border border-4 border-solid border-thBlack bg-gradient-to-b from-thGold to-white font-title text-4xl text-thBlack hover:scale-110 p-[50px]',
       },
       size: {
         default: 'h-10 px-4 py-2',

@@ -3,6 +3,7 @@ import { Button } from '@/components/ui/button'
 import { newArt } from '@/apis/artworks'
 import { IsAuthenticated } from '@/components/IsAuthenticated'
 import { APIProvider, Map, AdvancedMarker } from '@vis.gl/react-google-maps'
+import { useNavigate } from 'react-router-dom'
 
 const DEFAULT_CENTER = { lat: -41.29244, lng: 174.77876 }
 
@@ -16,6 +17,8 @@ const SubmitArt: React.FC = () => {
   const [mapLocation, setMapLocation] = useState<{ lat: number; lng: number }>(
     DEFAULT_CENTER,
   )
+
+  const navigate = useNavigate()
 
   function handleFileChange(event: React.ChangeEvent<HTMLInputElement>) {
     const file = event.target.files ? event.target.files[0] : null
@@ -44,6 +47,7 @@ const SubmitArt: React.FC = () => {
       setArtistName('')
       setLocationName('')
       setMapLocation(DEFAULT_CENTER)
+      navigate('/gallery')
     } catch (error) {
       console.error('Error submitting art:', error)
       setFormError('Failed to submit art.')
