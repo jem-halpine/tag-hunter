@@ -5,7 +5,7 @@ import Masonry from 'react-masonry-css'
 import { Link } from 'react-router-dom'
 import Loading from '@/components/Loading'
 import Error from '@/components/Error'
-
+import { Button } from '@/components/ui/button'
 
 export default function Gallery() {
   const { data, fetchNextPage, hasNextPage, status } = useInfiniteGallery()
@@ -27,6 +27,11 @@ export default function Gallery() {
     <div className="m-auto max-w-[1440px] p-10">
       <div>
         <Title title="Gallery" />
+        <Link to="/submit">
+          <Button variant="default" size="lg">
+            Submit Art
+          </Button>
+        </Link>
       </div>
       <InfiniteScroll
         dataLength={artworks.length}
