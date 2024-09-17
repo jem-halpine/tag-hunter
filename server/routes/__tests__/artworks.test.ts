@@ -20,9 +20,9 @@ afterAll(async () => {
 // GET /:id
 describe('GET /api/v1/artworks/:id', () => {
   it('returns an artwork with the specified id', async () => {
-    const id = 1
+    const id = 17
     const expectedArtwork = {
-      id: 1,
+      id: 17,
       location: '2 Mein Street, Newtown',
       latitude: -41.31092143587734,
       longitude: 174.77957489029637,

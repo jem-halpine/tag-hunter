@@ -19,12 +19,12 @@ afterAll(async () => {
 //getArtworkById(id)
 describe('getArtworkById(id)', () => {
   it('uses an id parameter to get a specific artwork', async () => {
-    const testId = 1
+    const testId = 17
 
     const artwork = await db.getArtworkById(testId)
 
     expect(artwork).toEqual({
-      id: 1,
+      id: 17,
       location: '2 Mein Street, Newtown',
       latitude: -41.31092143587734,
       longitude: 174.77957489029637,
@@ -208,7 +208,7 @@ describe('getUserProfile(user_id)', () => {
       unlockedArt: [
         {
           id: 4,
-          imageUrl: 'astro-driver.webp',
+          imageUrl: 'bird-trinity.webp',
         },
       ],
     })
