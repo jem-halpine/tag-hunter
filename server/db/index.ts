@@ -133,17 +133,18 @@ export async function getUserProfile(user_id: string) {
     .first()
 
   const unlockedArt = await db('games')
-    .join('artworks', 'artworks.id', '=', 'games.artwork_id')
-    .where('games.user_id', user_id)
-    .andWhere('games.art_was_found', 1)
-    .select('artworks.id', 'artworks.image_url as imageUrl')
+    .join('artworks','artworks.id','=','games.artwork_id')
+    .where("games.user_id", user_id)
+    .andWhere("games.art_was_found", 1)
+    .select("artworks.id", "artworks.image_url as imageUrl")
     .distinct()
+
 
   return {
     ...profile,
-    unlockedArt,
+    unlockedArt
   }
-}
+  }
 
 export async function newArtwork(data: {
   latitude: number
