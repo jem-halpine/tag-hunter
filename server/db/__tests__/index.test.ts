@@ -229,3 +229,29 @@ describe('getUserProfile(user_id)', () => {
     })
   })
 })
+
+//newArtwork(data)
+describe('newArtwork(data)', () => {
+  it('adds a new artwork to the database', async () => {
+    const data = {
+      latitude: 100,
+      longitude: 100,
+      artist: 'Your mum',
+      image_url: 'your-mum.webp',
+      location: 'your house',
+    }
+    await db.newArtwork(data)
+
+    const addedArtwork = await connection('artworks')
+      .where({ location: 'your house' })
+      .first()
+
+    expect(addedArtwork).toMatchObject({
+      latitude: 100,
+      longitude: 100,
+      artist: 'Your mum',
+      image_url: 'your-mum.webp',
+      location: 'your house',
+    })
+  })
+})
