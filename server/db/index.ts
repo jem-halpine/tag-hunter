@@ -123,7 +123,7 @@ export async function addUser(user: UserData) {
 }
 
 export async function getUserProfile(user_id: string) {
-  return await db('users')
+  const profile = await db('users')
     .leftJoin('games', 'users.auth0Id', '=', 'games.user_id')
     .where('users.auth0id', user_id)
     .select('users.name', 'users.email')
@@ -131,6 +131,18 @@ export async function getUserProfile(user_id: string) {
     .sum('games.art_was_found as wins')
     .sum('guesses_used as guesses')
     .first()
+
+  const unlockedArt = await db('games')
+    .join('artworks', 'artworks.id', '=', 'games.artwork_id')
+    .where('games.user_id', user_id)
+    .andWhere('games.art_was_found', 1)
+    .select('artworks.id', 'artworks.image_url as imageUrl')
+    .distinct()
+
+  return {
+    ...profile,
+    unlockedArt,
+  }
 }
 
 export async function newArtwork(data: {
