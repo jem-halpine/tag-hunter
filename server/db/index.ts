@@ -59,7 +59,6 @@ export async function getGames(): Promise<Game[]> {
       'users.name as username',
       'games.art_was_found as artWasFound',
       'games.guesses_used as guessesUsed',
-      // "games.rating",
     )
 }
 
