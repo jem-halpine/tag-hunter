@@ -39,8 +39,9 @@ const SubmitArt: React.FC = () => {
     if (locationName) formData.append('locationName', locationName)
 
     try {
-      await newArt(formData)
-      alert('Art submitted successfully!')
+      // await newArt(formData)
+      // alert('Art submitted successfully!')
+      alert('Submitting new art is disabled in the Demo version of TagHunter')
       setImageFile(null)
       setLatitude('')
       setLongitude('')

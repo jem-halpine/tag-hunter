@@ -68,7 +68,7 @@ export default function Profile() {
                       {data.guesses ? data.guesses : 0}
                     </TableCell>
                     <TableCell className="text-center text-2xl font-mono">
-                      {data.guesses ? (100 * data.wins) / data.guesses : 0}%
+                      {data.guesses ? ((100 * data.wins) / data.guesses).toFixed(2) : 0}%
                     </TableCell>
                   </TableRow>
                 </TableBody>
